@@ -518,27 +518,27 @@
         </div>
         
         <nav class="sidebar-nav">
-            <div class="nav-item active">
-                <i class="bi bi-speedometer2"></i>
-                <span>Dashboard</span>
-            </div>
-            <div class="nav-item">
-                <i class="bi bi-calendar-plus"></i>
-                <span>Book Appointment</span>
-            </div>
-            <div class="nav-item">
-                <i class="bi bi-clock-history"></i>
-                <span>Medical History</span>
-            </div>
-            <div class="nav-item">
-                <i class="bi bi-file-earmark-text"></i>
-                <span>Certificates</span>
-            </div>
-            <div class="nav-item">
-                <i class="bi bi-person"></i>
-                <span>Profile</span>
-            </div>
-        </nav>
+    <a href="dashboard.php" class="nav-item active" style="text-decoration: none; color: inherit;">
+        <i class="bi bi-speedometer2"></i>
+        <span>Dashboard</span>
+    </a>
+    <a href="book_appointment.php" class="nav-item" style="text-decoration: none; color: inherit;">
+        <i class="bi bi-calendar-plus"></i>
+        <span>Book Appointment</span>
+    </a>
+    <a href="medical_history.php" class="nav-item" style="text-decoration: none; color: inherit;">
+        <i class="bi bi-clock-history"></i>
+        <span>Medical History</span>
+    </a>
+    <a href="certificates.php" class="nav-item" style="text-decoration: none; color: inherit;">
+        <i class="bi bi-file-earmark-text"></i>
+        <span>Certificates</span>
+    </a>
+    <a href="profile.php" class="nav-item" style="text-decoration: none; color: inherit;">
+        <i class="bi bi-person"></i>
+        <span>Profile</span>
+    </a>
+</nav>
 
         <div class="sidebar-footer">
             <div class="chatbot-toggle" id="chatbotToggle">🤖</div>
