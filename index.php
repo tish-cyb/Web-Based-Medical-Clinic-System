@@ -208,7 +208,79 @@
 
     <!-- Main Content Placeholder -->
     <main>
-        <!-- Content goes here -->
+    <main id="home" class="hero-section">
+    <div class="container">
+        <div class="row g-5 align-items-stretch">
+
+            <!-- HERO -->
+            <div class="col-lg-7">
+                <div class="hero-card h-100">
+                    <div class="hero-controls">
+                        <span>&laquo;</span>
+                        <span>&raquo;</span>
+                    </div>
+
+                    <h2 class="hero-title">Assessment Services</h2>
+
+                    <ul class="hero-list">
+                        <li>Medical history taking (students & employees)</li>
+                        <li>Vital signs monitoring (BP, temp, HR, RR)</li>
+                        <li>Height & weight measurement</li>
+                        <li>Complete medical & physical examinations</li>
+                        <li>Illness identification, diagnosis & treatment</li>
+                    </ul>
+
+                    <div class="hero-dots">
+                        <span class="active"></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LOGIN -->
+            <div class="col-lg-5 d-flex align-items-center">
+                <div class="login-card w-100">
+
+                    <div class="text-center mb-4">
+                        <img src="assets/img/pup_logo.png" width="60" class="mb-2">
+                        <p class="text-muted mb-1">Secure Access Portal</p>
+                        <h2>Sign In</h2>
+                        <p class="text-muted small">Access your medical portal</p>
+                    </div>
+
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Email Address / ID Number</label>
+                            <input type="text" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" placeholder="Enter your password">
+                        </div>
+
+                        <button class="btn btn-login w-100 mt-2">
+                            Sign In
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <small class="text-muted">
+                            Trouble signing in?
+                            <a href="#" class="text-danger fw-semibold">Forgot password</a>
+                        </small>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
     </main>
     <!-- </main>
     
@@ -256,6 +328,11 @@
                 header.style.background = "rgba(255, 255, 255, 0.95)";
             }
         });
+        
+
+        
+
+
     </script>
 </body>
 </html>
