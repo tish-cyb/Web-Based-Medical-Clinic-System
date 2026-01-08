@@ -249,33 +249,29 @@
         <div class="sidebar-header">
             <h1>Admin Portal</h1>
             <p>System Management</p>
-        </div>
+        </div>      
         
         <nav class="sidebar-nav">
-            <div class="nav-item active">
+            <a href="admin_dashboard.php" class="nav-item active" style="text-decoration: none; color: inherit;">
                 <i class="bi bi-speedometer2"></i>
                 <span>Dashboard</span>
-            </div>
-            <div class="nav-item">
+            </a>
+            <a href="user_management.php" class="nav-item" style="text-decoration: none; color: inherit;">
                 <i class="bi bi-people"></i>
                 <span>User Management</span>
-            </div>
-            <div class="nav-item">
+            </a>
+            <a href="reports.php" class="nav-item" style="text-decoration: none; color: inherit;">
                 <i class="bi bi-file-earmark-text"></i>
                 <span>Reports</span>
-            </div>
-            <div class="nav-item">
-                <i class="bi bi-shield-check"></i>
-                <span>Security</span>
-            </div>
-            <div class="nav-item">
+            </a>
+            <a href="system_settings.php" class="nav-item" style="text-decoration: none; color: inherit;">
                 <i class="bi bi-gear"></i>
                 <span>System Settings</span>
-            </div>
-            <div class="nav-item">
+            </a>
+            <a href="profile.php" class="nav-item" style="text-decoration: none; color: inherit;">
                 <i class="bi bi-person"></i>
                 <span>Profile</span>
-            </div>
+            </a>
         </nav>
     </div>
 
@@ -315,7 +311,6 @@
                         <th>User Name</th>
                         <th>Action</th>
                         <th>Status</th>
-                        <th>IP Address</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -324,14 +319,24 @@
                         <td>juan.delacruz@pup.edu.ph</td>
                         <td>Medical Clearance</td>
                         <td><span class="status-badge status-success">Success</span></td>
-                        <td>192.168.1.100</td>
                     </tr>
                     <tr>
                         <td>March 20, 2024 10:25 AM</td>
                         <td>juan.delacruz@pup.edu.ph</td>
                         <td>Medical Clearance</td>
                         <td><span class="status-badge status-success">Success</span></td>
-                        <td>192.168.1.101</td>
+                    </tr>
+                    <tr>
+                        <td>March 20, 2024 10:20 AM</td>
+                        <td>maria.garcia@pup.edu.ph</td>
+                        <td>User Login</td>
+                        <td><span class="status-badge status-success">Success</span></td>
+                    </tr>
+                    <tr>
+                        <td>March 20, 2024 10:15 AM</td>
+                        <td>carlos.mendoza@pup.edu.ph</td>
+                        <td>Profile Update</td>
+                        <td><span class="status-badge status-success">Success</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -340,17 +345,5 @@
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-    
-    <script>
-        // Navigation functionality
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', function() {
-                document.querySelectorAll('.nav-item').forEach(nav => {
-                    nav.classList.remove('active');
-                });
-                this.classList.add('active');
-            });
-        });
-    </script>
 </body>
 </html>
