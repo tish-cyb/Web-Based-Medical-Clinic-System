@@ -48,6 +48,7 @@
             display: flex;
             flex-direction: column;
             box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+            z-index: 1000;
         }
 
         .sidebar-header {
@@ -286,31 +287,31 @@
         </div>
         
         <nav class="sidebar-nav">
-            <div class="nav-item active">
+            <div class="nav-item active" data-page="dashboard">
                 <i class="bi bi-speedometer2"></i>
                 <span>Dashboard</span>
             </div>
-            <div class="nav-item">
+            <div class="nav-item" data-page="roster">
                 <i class="bi bi-people"></i>
                 <span>Student Roster</span>
             </div>
-            <div class="nav-item">
+            <div class="nav-item" data-page="appointments">
                 <i class="bi bi-calendar-check"></i>
                 <span>Appointments</span>
             </div>
-            <div class="nav-item">
+            <div class="nav-item" data-page="records">
                 <i class="bi bi-folder2-open"></i>
                 <span>Patient Records</span>
             </div>
-            <div class="nav-item">
+            <div class="nav-item" data-page="consultations">
                 <i class="bi bi-chat-dots"></i>
                 <span>Consultations</span>
             </div>
-            <div class="nav-item">
+            <div class="nav-item" data-page="certificate">
                 <i class="bi bi-file-earmark-medical"></i>
                 <span>Medical Certificate</span>
             </div>
-            <div class="nav-item">
+            <div class="nav-item" data-page="profile">
                 <i class="bi bi-person"></i>
                 <span>Profile</span>
             </div>
@@ -395,13 +396,26 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     
     <script>
-        // Navigation functionality
+        // Navigation functionality with file linking
+        const pageFiles = {
+            'dashboard': 'nurse_dashboard.php',
+            'roster': 'student_roster.php',
+            'appointments': 'appointments.php',
+            'records': 'patient_records.php',
+            'consultations': 'consultations.php',
+            'certificate': 'medical_cert.php',
+            'profile': 'profile.php'
+        };
+
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', function() {
-                document.querySelectorAll('.nav-item').forEach(nav => {
-                    nav.classList.remove('active');
-                });
-                this.classList.add('active');
+                const page = this.getAttribute('data-page');
+                const filename = pageFiles[page];
+                
+                if (filename) {
+                    // Navigate to the corresponding PHP file
+                    window.location.href = filename;
+                }
             });
         });
 
