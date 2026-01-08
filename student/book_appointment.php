@@ -101,6 +101,265 @@
             color: white;
         }
 
+        .sidebar-footer {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .chatbot-toggle {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .chatbot-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            left: 295px;
+            width: 380px;
+            height: 550px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .chatbot-container.show {
+            display: flex;
+        }
+
+        .chatbot-header {
+            background: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-header h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chatbot-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        .chatbot-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: var(--bg-body);
+        }
+
+        .message {
+            margin-bottom: 16px;
+            display: flex;
+            gap: 10px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .message.bot .message-avatar {
+            background: var(--primary-soft);
+        }
+
+        .message.user .message-avatar {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .message.bot .message-content {
+            background: white;
+            color: var(--text-dark);
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.user .message-content {
+            background: var(--primary-color);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chatbot-input-area {
+            padding: 16px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .chatbot-input-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chatbot-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 24px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .chatbot-input:focus {
+            border-color: var(--primary-color);
+        }
+
+        .chatbot-send {
+            width: 44px;
+            height: 44px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: background 0.3s ease;
+        }
+
+        .chatbot-send:hover {
+            background: var(--primary-light);
+        }
+
+        .chatbot-send:disabled {
+            background: #d1d5db;
+            cursor: not-allowed;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: var(--text-gray);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        .quick-actions {
+            padding: 12px 20px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            background: var(--bg-body);
+        }
+
+        .quick-action-btn {
+            padding: 8px 16px;
+            background: white;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .quick-action-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
         .main-content {
             margin-left: 275px;
             padding: 40px 50px;
@@ -465,6 +724,7 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+        
     </style>
 </head>
 <body>
@@ -475,27 +735,66 @@
         </div>
         
         <nav class="sidebar-nav">
-    <a href="student_dashboard.php" class="nav-item" style="text-decoration: none; color: inherit;">
-        <i class="bi bi-speedometer2"></i>
-        <span>Dashboard</span>
-    </a>
-    <a href="book_appointment.php" class="nav-item active" style="text-decoration: none; color: inherit;">
-        <i class="bi bi-calendar-plus"></i>
-        <span>Book Appointment</span>
-    </a>
-    <a href="medical_history.php" class="nav-item" style="text-decoration: none; color: inherit;">
-        <i class="bi bi-clock-history"></i>
-        <span>Medical History</span>
-    </a>
-    <a href="certificates.php" class="nav-item" style="text-decoration: none; color: inherit;">
-        <i class="bi bi-file-earmark-medical"></i>
-        <span>Certificates</span>
-    </a>
-    <a href="profile.php" class="nav-item" style="text-decoration: none; color: inherit;">
-        <i class="bi bi-person"></i>
-        <span>Profile</span>
-    </a>
-</nav>
+            <a href="student_dashboard.php" class="nav-item" style="text-decoration: none; color: inherit;">
+                <i class="bi bi-speedometer2"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="book_appointment.php" class="nav-item active" style="text-decoration: none; color: inherit;">
+                <i class="bi bi-calendar-plus"></i>
+                <span>Book Appointment</span>
+            </a>
+            <a href="medical_history.php" class="nav-item" style="text-decoration: none; color: inherit;">
+                <i class="bi bi-clock-history"></i>
+                <span>Medical History</span>
+            </a>
+            <a href="certificates.php" class="nav-item" style="text-decoration: none; color: inherit;">
+                <i class="bi bi-file-earmark-medical"></i>
+                <span>Certificates</span>
+            </a>
+            <a href="profile.php" class="nav-item" style="text-decoration: none; color: inherit;">
+                <i class="bi bi-person"></i>
+                <span>Profile</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="chatbot-toggle" id="chatbotToggle">🤖</div>
+        </div>
+    </div>
+
+    <!-- Chatbot Container -->
+    <div class="chatbot-container" id="chatbotContainer">
+        <div class="chatbot-header">
+            <h3><i class="bi bi-robot"></i> Medical Assistant</h3>
+            <button class="chatbot-close" id="chatbotClose">&times;</button>
+        </div>
+        <div class="quick-actions">
+            <button class="quick-action-btn" data-message="Help with booking">📅 Booking Help</button>
+            <button class="quick-action-btn" data-message="Available time slots">⏰ Time Slots</button>
+            <button class="quick-action-btn" data-message="What documents do I need">📄 Requirements</button>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="message bot">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    Hello! I'm here to help you book an appointment. What would you like to know?
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-input-area">
+            <div class="chatbot-input-wrapper">
+                <input 
+                    type="text" 
+                    class="chatbot-input" 
+                    id="chatbotInput" 
+                    placeholder="Type your message..."
+                    autocomplete="off"
+                >
+                <button class="chatbot-send" id="chatbotSend">
+                    <i class="bi bi-send-fill"></i>
+                </button>
+            </div>
+        </div>
     </div>
 
     <main class="main-content">
@@ -776,6 +1075,132 @@
                 });
                 this.classList.add('active');
             });
+        });
+
+        // Chatbot functionality
+        const chatbotToggle = document.getElementById('chatbotToggle');
+        const chatbotContainer = document.getElementById('chatbotContainer');
+        const chatbotClose = document.getElementById('chatbotClose');
+        const chatbotMessages = document.getElementById('chatbotMessages');
+        const chatbotInput = document.getElementById('chatbotInput');
+        const chatbotSend = document.getElementById('chatbotSend');
+
+        // Toggle chatbot
+        chatbotToggle.addEventListener('click', () => {
+            chatbotContainer.classList.toggle('show');
+        });
+
+        chatbotClose.addEventListener('click', () => {
+            chatbotContainer.classList.remove('show');
+        });
+
+        // Quick action buttons
+        document.querySelectorAll('.quick-action-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const message = btn.getAttribute('data-message');
+                sendMessage(message);
+            });
+        });
+
+        // Send message function
+        function sendMessage(messageText = null) {
+            const text = messageText || chatbotInput.value.trim();
+            
+            if (!text) return;
+
+            // Add user message
+            addMessage(text, 'user');
+            chatbotInput.value = '';
+
+            // Show typing indicator
+            showTypingIndicator();
+
+            // Simulate bot response
+            setTimeout(() => {
+                hideTypingIndicator();
+                const response = getBotResponse(text);
+                addMessage(response, 'bot');
+            }, 1000 + Math.random() * 1000);
+        }
+
+        // Add message to chat
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = sender === 'bot' ? '🤖' : '👤';
+            
+            const content = document.createElement('div');
+            content.className = 'message-content';
+            content.textContent = text;
+            
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(content);
+            chatbotMessages.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        }
+
+        // Typing indicator
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot';
+            typingDiv.id = 'typingIndicator';
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = '🤖';
+            
+            const indicator = document.createElement('div');
+            indicator.className = 'message-content typing-indicator';
+            indicator.innerHTML = '<span></span><span></span><span></span>';
+            
+            typingDiv.appendChild(avatar);
+            typingDiv.appendChild(indicator);
+            chatbotMessages.appendChild(typingDiv);
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) indicator.remove();
+        }
+
+        // Bot responses for booking page
+        function getBotResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            if (lowerMessage.includes('category') || lowerMessage.includes('type')) {
+                return "We offer 5 appointment categories:\n• General Consultation - for common symptoms\n• First Aid/Injury Care - for minor injuries\n• Medical Clearance - for PE and school requirements\n• Follow-Up Checkup - for monitoring\n• Health Counseling - for wellness concerns";
+            } else if (lowerMessage.includes('time') || lowerMessage.includes('slot') || lowerMessage.includes('available')) {
+                return "Available time slots are from 6:30 AM to 5:20 PM, Monday to Friday. Select your preferred date in the calendar to see available times.";
+            } else if (lowerMessage.includes('requirement') || lowerMessage.includes('document') || lowerMessage.includes('need')) {
+                return "You'll need:\n• Valid Student ID\n• Clear reason for appointment\n• Complete student information\n• Available appointment slot";
+            } else if (lowerMessage.includes('nurse') || lowerMessage.includes('doctor')) {
+                return "Our nurses are available at PUP iTech Clinic from 8:00 AM to 5:00 PM, Monday to Friday. You can select your preferred nurse after choosing a category.";
+            } else if (lowerMessage.includes('cancel') || lowerMessage.includes('reschedule')) {
+                return "To cancel or reschedule an appointment, please visit your Medical History page or contact the clinic directly.";
+            } else if (lowerMessage.includes('help') || lowerMessage.includes('how')) {
+                return "To book an appointment:\n1. Select a category\n2. Choose a nurse\n3. Pick a date and time\n4. Fill in your information\n\nWhat step do you need help with?";
+            } else if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
+                return "Hello! I'm here to help you book an appointment. What would you like to know?";
+            } else if (lowerMessage.includes('hour') || lowerMessage.includes('open')) {
+                return "The PUP iTech Clinic is open Monday to Friday, 8:00 AM to 5:00 PM. We're closed on weekends and holidays.";
+            } else {
+                return "I can help you with appointment booking, time slots, requirements, and general clinic information. What would you like to know?";
+            }
+        }
+
+        // Event listeners for chatbot
+        chatbotSend.addEventListener('click', () => sendMessage());
+        
+        chatbotInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
         });
     </script>
 </body>
