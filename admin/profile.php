@@ -549,11 +549,8 @@
         });
 
         document.getElementById('confirmLogout').addEventListener('click', function() {
-            // In a real application, you would clear session/tokens here
-            console.log('User logged out');
-            
-            // Redirect to signup page
-            window.location.href = 'signup.php';
+            // Redirect to logout file which will handle session clearing and redirect to index
+            window.location.href = '../auth/logout.php';
         });
 
         // Close modal when clicking outside
