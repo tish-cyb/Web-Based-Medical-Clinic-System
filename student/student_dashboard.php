@@ -518,7 +518,7 @@
         </div>
         
         <nav class="sidebar-nav">
-    <a href="dashboard.php" class="nav-item active" style="text-decoration: none; color: inherit;">
+    <a href="student_dashboard.php" class="nav-item active" style="text-decoration: none; color: inherit;">
         <i class="bi bi-speedometer2"></i>
         <span>Dashboard</span>
     </a>
