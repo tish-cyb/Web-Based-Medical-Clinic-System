@@ -12,42 +12,42 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <style>
-        :root {
-            --primary-color: #7f1d1d; 
-            --primary-light: #b91c1c;
-            --primary-soft: #fef2f2; 
-            --primary-gradient-start: #7f1d1d;
-            --primary-gradient-end: #ef4444; 
-            --text-dark: #1f2937;
-            --text-gray: #6b7280;
-            --bg-body: #f3f4f6;
+<style>
+    :root {
+        --primary-color: #7f1d1d; 
+        --primary-light: #b91c1c;
+        --primary-soft: #fef2f2; 
+        --primary-gradient-start: #7f1d1d;
+        --primary-gradient-end: #ef4444; 
+        --text-dark: #1f2937;
+        --text-gray: #6b7280;
+        --bg-body: #f3f4f6;
         }
 
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-body);
-            min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--bg-body);
+        min-height: 100vh;
         }
 
         .sidebar {
-            width: 275px;
-            background: linear-gradient(180deg, #860303 3%, #B21414 79%, #940000 97%);
-            color: white;
-            position: fixed;
-            height: 100vh;
-            left: 0;
-            top: 0;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
-            z-index: 1000;
+        width: 275px;
+        background: linear-gradient(180deg, #860303 3%, #B21414 79%, #940000 97%);
+        color: white;
+        position: fixed;
+        height: 100vh;
+        left: 0;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+        z-index: 1000;
         }
 
         .sidebar-header {

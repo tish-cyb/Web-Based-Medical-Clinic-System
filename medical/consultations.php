@@ -74,6 +74,10 @@
             box-shadow: 0 12px 32px rgba(127,29,29,0.15);
             border-color: var(--primary-light);
         }
+        /* Non-clickable card variant for clearance */
+        .form-card.no-click { cursor: default; }
+        .form-card.no-click:hover { transform: none; box-shadow: 0 2px 16px rgba(0,0,0,0.07); border-color: transparent; }
+
         .form-card-header {
             padding: 28px 30px 20px;
             display: flex;
@@ -92,6 +96,7 @@
         .icon-health-exam { background: #f0fdf4; color: #15803d; }
         .icon-clearance   { background: #fdf4ff; color: #7e22ce; }
         .icon-consent     { background: #fff7ed; color: #c2410c; }
+        .icon-certificate { background: #f0f9ff; color: #0369a1; }
 
         .form-card-info { flex: 1; }
         .form-card-title { font-size: 17px; font-weight: 700; color: var(--text-dark); margin-bottom: 5px; }
@@ -110,13 +115,51 @@
         .form-card-footer i { font-size: 16px; transition: transform 0.2s ease; }
         .form-card:hover .form-card-footer i { transform: translateX(4px); }
 
-        .badge-form {
-            background: var(--primary-soft);
-            color: var(--primary-color);
-            font-size: 11px;
+        /* CLEARANCE ROLE BUTTONS */
+        .clearance-btn-row {
+            padding: 14px 30px;
+            background: #f9fafb;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            gap: 12px;
+        }
+        .clearance-role-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 16px;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
             font-weight: 600;
-            padding: 3px 10px;
-            border-radius: 20px;
+            cursor: pointer;
+            border: 2px solid;
+            transition: all 0.25s ease;
+            text-decoration: none;
+        }
+        .clearance-role-btn.student {
+            background: #fef2f2;
+            border-color: #ef4444;
+            color: #b91c1c;
+        }
+        .clearance-role-btn.student:hover {
+            background: #b91c1c;
+            color: white;
+            box-shadow: 0 4px 14px rgba(185,28,28,0.3);
+            transform: translateY(-1px);
+        }
+        .clearance-role-btn.faculty {
+            background: #fef2f2;
+            border-color: #ef4444;
+            color: #b91c1c;
+        }
+        .clearance-role-btn.faculty:hover {
+            background: #b91c1c;
+            color: white;
+            box-shadow: 0 4px 14px rgba(185,28,28,0.3);
+            transform: translateY(-1px);
         }
 
         /* SECTION HEADER */
@@ -171,6 +214,10 @@
             align-items: flex-start;
             flex-shrink: 0;
         }
+        /* Student modal head — purple gradient */
+        .modal-head.student-head {
+            background: linear-gradient(90deg, var(--primary-gradient-start), var(--primary-gradient-end));
+        }
         .modal-head-title { font-size: 20px; font-weight: 700; margin-bottom: 3px; }
         .modal-head-sub { font-size: 13px; opacity: 0.85; }
         .modal-close-btn {
@@ -193,6 +240,7 @@
             border-bottom: 2px solid var(--primary-soft);
             display: flex; align-items: center; gap: 8px;
         }
+        .f-section-title.purple-title { color: var(--primary-color); border-bottom-color: var(--primary-soft); }
         .f-section-title:first-child { margin-top: 0; }
         .f-grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-bottom: 18px; }
         .f-grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 18px; margin-bottom: 18px; }
@@ -214,6 +262,7 @@
             background: white;
         }
         .f-control:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(127,29,29,0.09); }
+        .f-control.purple-focus:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(127,29,29,0.09); }
         textarea.f-control { resize: vertical; min-height: 90px; }
         select.f-control { cursor: pointer; }
 
@@ -273,6 +322,16 @@
             display: flex; align-items: center; gap: 8px;
         }
         .btn-modal-save:hover { background: var(--primary-light); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(127,29,29,0.3); }
+        .btn-modal-save.purple-btn { background: var(--primary-color); }
+        .btn-modal-save.purple-btn:hover { background: var(--primary-light); box-shadow: 0 4px 12px rgba(127,29,29,0.3); }
+        .btn-modal-secondary {
+            padding: 11px 26px; border-radius: 8px; border: none;
+            background: #e5e7eb; color: var(--text-dark);
+            font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s ease;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .btn-modal-secondary:hover { background: #d1d5db; }
 
         /* CONSENT TEXT BLOCK */
         .consent-text {
@@ -284,6 +343,67 @@
             line-height: 1.8;
             color: var(--text-dark);
             margin-bottom: 18px;
+        }
+
+        /* OFFICIAL CERTIFICATE PREVIEW - mimics the actual PUP form */
+        .cert-document {
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 30px 36px;
+            background: white;
+            font-family: 'Times New Roman', serif;
+            margin-bottom: 18px;
+        }
+        .cert-document .cert-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 10px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #7f1d1d;
+        }
+        .cert-document .cert-logo {
+            width: 60px; height: 60px;
+            background: #7f1d1d;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 22px; font-weight: 700; flex-shrink: 0;
+        }
+        .cert-document .cert-header-text { flex: 1; text-align: center; }
+        .cert-document .cert-header-text .rep { font-size: 11px; color: #555; }
+        .cert-document .cert-header-text .univ { font-size: 14px; font-weight: bold; color: #1f2937; }
+        .cert-document .cert-header-text .loc { font-size: 11px; color: #555; }
+        .cert-document .cert-title-block { text-align: center; margin: 18px 0 6px; }
+        .cert-document .cert-title-block .main-title { font-size: 18px; font-weight: bold; color: #7f1d1d; letter-spacing: 1px; }
+        .cert-document .cert-title-block .sub-title { font-size: 13px; font-weight: bold; color: #7f1d1d; letter-spacing: 2px; margin-top: 2px; }
+        .cert-document .cert-body-text { font-size: 13px; line-height: 2.2; color: #1f2937; margin-top: 16px; }
+        .cert-document .cert-field-line {
+            display: inline-block;
+            border-bottom: 1.5px solid #1f2937;
+            min-width: 220px;
+            text-align: center;
+            font-weight: bold;
+            color: #7f1d1d;
+            padding: 0 4px;
+        }
+        .cert-document .cert-field-line.wide { min-width: 320px; }
+        .cert-document .cert-field-line.full { display: block; width: 100%; margin: 4px 0; }
+        .cert-document .cert-sig-block { margin-top: 40px; text-align: center; }
+        .cert-document .cert-sig-line {
+            border-top: 2px solid #1f2937;
+            width: 260px;
+            margin: 0 auto;
+            padding-top: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #1f2937;
+        }
+        .cert-document .cert-sig-detail { font-size: 12px; color: #555; margin-top: 3px; }
+        .cert-document .cert-form-ref {
+            font-size: 10px; color: #999;
+            margin-top: 20px; text-align: right;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 8px;
         }
 
         /* PHYSICIAN SIGN BOX */
@@ -298,6 +418,20 @@
             margin-bottom: 18px;
             background: #fafafa;
         }
+
+        /* ROLE BADGE */
+        .role-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 4px 14px; border-radius: 999px;
+            font-size: 12px; font-weight: 700; letter-spacing: 0.5px;
+            margin-bottom: 20px;
+        }
+        .role-badge.student { background: #fef2f2; color: #b91c1c; border: 1.5px solid #ef4444; }
+        .role-badge.faculty { background: #fef2f2; color: #b91c1c; border: 1.5px solid #ef4444; }
+
+        /* FACULTY SPECIFIC */
+        .faculty-fields { background: #fff7ed; border: 1.5px solid #fed7aa; border-radius: 10px; padding: 16px 18px; margin-bottom: 18px; }
+        .faculty-fields .f-label { color: #92400e; }
 
         /* SUCCESS TOAST */
         .toast-alert {
@@ -330,6 +464,32 @@
         /* DIVIDER */
         .f-divider { border: none; border-top: 1px solid #e5e7eb; margin: 20px 0; }
 
+        /* CERTIFICATE PREVIEW */
+        .cert-preview-box {
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 36px;
+            background: white;
+            font-family: 'Times New Roman', serif;
+            margin-bottom: 18px;
+        }
+        .cert-preview-box .cert-title {
+            font-size: 22px; font-weight: bold; color: var(--primary-color);
+            text-align: center; margin-bottom: 6px;
+        }
+        .cert-preview-box .cert-clinic-name {
+            font-size: 15px; font-weight: 600; text-align: center;
+            margin-bottom: 16px; padding-bottom: 16px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        .cert-preview-box .cert-body { line-height: 2; font-size: 14px; color: var(--text-dark); }
+        .cert-preview-box .cert-field { font-weight: bold; color: var(--primary-color); }
+        .cert-preview-box .cert-sig { margin-top: 50px; text-align: right; }
+        .cert-preview-box .cert-sig-line {
+            border-top: 2px solid #1f2937; width: 240px; margin-left: auto;
+            padding-top: 6px; font-weight: 600; font-size: 14px;
+        }
+
         @media (max-width: 900px) {
             .forms-grid { grid-template-columns: 1fr; }
             .f-grid-3 { grid-template-columns: repeat(2,1fr); }
@@ -356,7 +516,6 @@
         <div class="nav-item" data-page="appointments"><i class="bi bi-calendar-check"></i><span>Appointments</span></div>
         <div class="nav-item" data-page="records"><i class="bi bi-folder2-open"></i><span>Patient Records</span></div>
         <div class="nav-item active" data-page="consultations"><i class="bi bi-chat-dots"></i><span>Consultations</span></div>
-        <div class="nav-item" data-page="certificate"><i class="bi bi-file-earmark-medical"></i><span>Medical Certificate</span></div>
         <div class="nav-item" data-page="profile"><i class="bi bi-person"></i><span>Profile</span></div>
     </nav>
 </div>
@@ -417,18 +576,22 @@
             </div>
         </div>
 
-        <!-- 4. Medical Clearance (Physically Fit) -->
-        <div class="form-card" onclick="openModal('clearance')">
+        <!-- 4. Medical Clearance — SPLIT BUTTONS -->
+        <div class="form-card no-click">
             <div class="form-card-header">
                 <div class="form-card-icon icon-clearance"><i class="bi bi-shield-check"></i></div>
                 <div class="form-card-info">
                     <div class="form-card-title">Medical Clearance — Physically Fit</div>
-                    <div class="form-card-desc">Issue PUP Medical Services clearance certifying that a student or employee is physically fit for a specified purpose.</div>
+                    <div class="form-card-desc">Issue PUP Medical Services clearance certifying physical fitness. Select the applicable role to open the correct form.</div>
                 </div>
             </div>
-            <div class="form-card-footer">
-                <span>Open Form</span>
-                <i class="bi bi-arrow-right"></i>
+            <div class="clearance-btn-row">
+                <button class="clearance-role-btn student" onclick="openModal('clearance-student')">
+                    <i class="bi bi-mortarboard-fill"></i> Student
+                </button>
+                <button class="clearance-role-btn faculty" onclick="openModal('clearance-faculty')">
+                    <i class="bi bi-person-badge-fill"></i> Employee
+                </button>
             </div>
         </div>
 
@@ -439,6 +602,21 @@
                 <div class="form-card-info">
                     <div class="form-card-title">Declaration & Data Subject Consent</div>
                     <div class="form-card-desc">Record patient consent to the collection and processing of personal health information in compliance with the Data Privacy Act of 2012.</div>
+                </div>
+            </div>
+            <div class="form-card-footer">
+                <span>Open Form</span>
+                <i class="bi bi-arrow-right"></i>
+            </div>
+        </div>
+
+        <!-- 6. Medical Certificate -->
+        <div class="form-card" onclick="openModal('certificate')">
+            <div class="form-card-header">
+                <div class="form-card-icon icon-certificate"><i class="bi bi-file-earmark-medical"></i></div>
+                <div class="form-card-info">
+                    <div class="form-card-title">Medical Certificate</div>
+                    <div class="form-card-desc">Generate and print official medical certificates for sick leave, clearance, fitness to work/study, or other purposes.</div>
                 </div>
             </div>
             <div class="form-card-footer">
@@ -464,7 +642,6 @@
         </div>
         <div class="modal-scroll">
             <form id="form-consultation" onsubmit="saveForm(event,'consultation')">
-
                 <div class="f-section-title"><i class="bi bi-person"></i> Patient Information</div>
                 <div class="f-grid-3">
                     <div class="f-group">
@@ -500,7 +677,6 @@
                         <input class="f-control" type="text" placeholder="e.g., CCS">
                     </div>
                 </div>
-
                 <div class="f-section-title"><i class="bi bi-thermometer-half"></i> Vital Signs</div>
                 <div class="f-grid-3">
                     <div class="f-group">
@@ -528,7 +704,6 @@
                         <input class="f-control" type="text" placeholder="e.g., 60">
                     </div>
                 </div>
-
                 <div class="f-section-title"><i class="bi bi-journal-medical"></i> Clinical Information</div>
                 <div class="f-group f-grid-1">
                     <label class="f-label">Chief Complaint / Symptoms <span class="req">*</span></label>
@@ -585,12 +760,10 @@
         </div>
         <div class="modal-scroll">
             <form id="form-laboratory" onsubmit="saveForm(event,'laboratory')">
-
                 <div class="pup-header">
                     <div class="pup-title">POLYTECHNIC UNIVERSITY OF THE PHILIPPINES<br>Medical Services Department — Sta. Mesa, Manila</div>
                     <div class="pup-sub">LABORATORY EXAMINATION FORM</div>
                 </div>
-
                 <div class="f-section-title"><i class="bi bi-person"></i> Patient Information</div>
                 <div class="f-grid-3">
                     <div class="f-group" style="grid-column: span 2;">
@@ -612,17 +785,13 @@
                         <input class="f-control" type="text" placeholder="e.g., 2023-12345-MN-0">
                     </div>
                 </div>
-
                 <div class="f-section-title"><i class="bi bi-list-check"></i> Request For</div>
-
                 <p style="font-size:13px; color:var(--text-gray); margin-bottom:14px;">Check all tests to be requested:</p>
-
                 <label class="f-label" style="margin-bottom:10px;">Chest X-Ray</label>
                 <div class="checkbox-grid cols-3" style="margin-bottom:20px;">
                     <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> PA (Postero-Anterior)</label>
                     <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> AP-LAT</label>
                 </div>
-
                 <label class="f-label" style="margin-bottom:10px;">General Tests</label>
                 <div class="checkbox-grid" style="margin-bottom:20px;">
                     <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> ECG</label>
@@ -630,7 +799,6 @@
                     <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Fecalysis</label>
                     <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Drug Test</label>
                 </div>
-
                 <label class="f-label" style="margin-bottom:10px;">Blood Chemistry</label>
                 <div class="checkbox-grid cols-3" style="margin-bottom:20px;">
                     <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> CBC</label>
@@ -645,12 +813,10 @@
                     <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> SGPT</label>
                     <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Hepatitis B</label>
                 </div>
-
                 <div class="f-group">
                     <label class="f-label">Others (specify)</label>
                     <input class="f-control" type="text" placeholder="Specify other tests...">
                 </div>
-
                 <hr class="f-divider">
                 <div class="sign-box">
                     <div style="font-weight:700; font-size:15px; color:var(--text-dark); margin-bottom:4px;">FELICITAS A. BERMUDEZ, M.D.</div>
@@ -684,13 +850,10 @@
         </div>
         <div class="modal-scroll">
             <form id="form-healthexam" onsubmit="saveForm(event,'healthexam')">
-
                 <div class="pup-header">
                     <div class="pup-title">POLYTECHNIC UNIVERSITY OF THE PHILIPPINES<br>HEALTH EXAMINATION RECORD</div>
                     <div class="pup-sub">Office of the VP for Administration — Medical Services Department</div>
                 </div>
-
-                <!-- Patient Info -->
                 <div class="f-section-title"><i class="bi bi-person-badge"></i> Patient Information</div>
                 <div class="f-grid-2">
                     <div class="f-group">
@@ -753,10 +916,8 @@
                     <label class="f-label">Contact Person In Case of Emergency</label>
                     <input class="f-control" type="text" placeholder="Full Name & Relationship">
                 </div>
-
-                <!-- I. Past Medical History -->
                 <div class="f-section-title"><i class="bi bi-clock-history"></i> I. Past Medical History</div>
-                <p style="font-size:12px;color:var(--text-gray);margin-bottom:10px;">Leave blank for No, check for Yes. Include age if applicable.</p>
+                <p style="font-size:12px;color:var(--text-gray);margin-bottom:10px;">Leave blank for No, check for Yes.</p>
                 <label class="f-label">Childhood Illness</label>
                 <div class="checkbox-grid cols-3" style="margin-bottom:16px;">
                     <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Asthma</label>
@@ -796,10 +957,7 @@
                         <input class="f-control" type="text" placeholder="Food, medicine, etc...">
                     </div>
                 </div>
-
-                <!-- II. Family History -->
                 <div class="f-section-title"><i class="bi bi-people"></i> II. Family History</div>
-                <p style="font-size:12px;color:var(--text-gray);margin-bottom:10px;">Check if present. Indicate MS (mother's side) or FS (father's side).</p>
                 <div class="checkbox-grid cols-3" style="margin-bottom:16px;">
                     <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Diabetes</label>
                     <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> PTB</label>
@@ -810,8 +968,6 @@
                     <label class="f-label">Other Family History (specify with MS/FS)</label>
                     <input class="f-control" type="text" placeholder="e.g., Heart Disease - FS">
                 </div>
-
-                <!-- III. Personal History -->
                 <div class="f-section-title"><i class="bi bi-person-check"></i> III. Personal History</div>
                 <div class="f-grid-3">
                     <div class="f-group">
@@ -836,12 +992,10 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- IV. Physical Examination -->
                 <div class="f-section-title"><i class="bi bi-stethoscope"></i> IV. Physical Examination</div>
                 <div class="f-grid-3" style="margin-bottom:16px;">
                     <div class="f-group">
-                        <label class="f-label">Vital Signs</label>
+                        <label class="f-label">General Condition</label>
                         <div class="radio-group" style="padding-top:10px;">
                             <label class="radio-item"><input type="radio" name="distress" value="Not in Distress"> Not in Distress</label>
                             <label class="radio-item"><input type="radio" name="distress" value="In Distress"> In Distress</label>
@@ -880,104 +1034,6 @@
                         <input class="f-control" type="date">
                     </div>
                 </div>
-
-                <label class="f-label" style="margin-bottom:10px;">Head</label>
-                <div class="checkbox-grid cols-3" style="margin-bottom:16px;">
-                    <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Wound</label>
-                    <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Mass</label>
-                    <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Alopecia</label>
-                </div>
-
-                <label class="f-label" style="margin-bottom:10px;">Eyes</label>
-                <div class="checkbox-grid cols-3" style="margin-bottom:16px;">
-                    <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> w/o Glasses</label>
-                    <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> w/ Glasses</label>
-                    <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Anicteric Sclera</label>
-                    <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Pink Palpebral Conjunctiva</label>
-                </div>
-
-                <label class="f-label" style="margin-bottom:10px;">Ears</label>
-                <div class="checkbox-grid cols-3" style="margin-bottom:16px;">
-                    <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> No Gross Deformity</label>
-                    <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> No Discharge</label>
-                </div>
-
-                <label class="f-label" style="margin-bottom:10px;">Throat</label>
-                <div class="checkbox-grid cols-3" style="margin-bottom:16px;">
-                    <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> No TPC</label>
-                    <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> No Mass</label>
-                    <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> No Lymphadenopathy</label>
-                </div>
-
-                <label class="f-label" style="margin-bottom:10px;">Chest / Lungs</label>
-                <div class="checkbox-grid cols-3" style="margin-bottom:10px;">
-                    <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Normal</label>
-                    <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Wheeze</label>
-                    <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Rales</label>
-                </div>
-
-                <label class="f-label" style="margin-bottom:10px;">Chest X-Ray Result</label>
-                <div class="radio-group" style="margin-bottom:16px;">
-                    <label class="radio-item"><input type="radio" name="cxr" value="Normal"> Normal</label>
-                    <label class="radio-item"><input type="radio" name="cxr" value="With findings"> With Findings</label>
-                </div>
-
-                <label class="f-label" style="margin-bottom:10px;">Breast</label>
-                <div class="radio-group" style="margin-bottom:16px;">
-                    <label class="radio-item"><input type="radio" name="breast" value="Normal"> Normal</label>
-                </div>
-
-                <label class="f-label" style="margin-bottom:10px;">Heart</label>
-                <div class="f-grid-2" style="margin-bottom:16px;">
-                    <div>
-                        <label class="f-label">Murmur</label>
-                        <div class="radio-group">
-                            <label class="radio-item"><input type="radio" name="murmur" value="Present"> Present</label>
-                            <label class="radio-item"><input type="radio" name="murmur" value="Absent"> Absent</label>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="f-label">Rhythm</label>
-                        <div class="radio-group">
-                            <label class="radio-item"><input type="radio" name="rhythm" value="Regular"> Regular</label>
-                            <label class="radio-item"><input type="radio" name="rhythm" value="Irregular"> Irregular</label>
-                        </div>
-                    </div>
-                </div>
-
-                <label class="f-label" style="margin-bottom:10px;">Abdomen</label>
-                <div class="radio-group" style="margin-bottom:16px;">
-                    <label class="radio-item"><input type="radio" name="abdomen" value="Normal"> Normal</label>
-                </div>
-
-                <label class="f-label" style="margin-bottom:10px;">Extremities</label>
-                <div class="radio-group" style="margin-bottom:16px;">
-                    <label class="radio-item"><input type="radio" name="extremities" value="No Deformities"> No Deformities</label>
-                </div>
-
-                <label class="f-label" style="margin-bottom:10px;">Vertebral Column</label>
-                <div class="radio-group" style="margin-bottom:16px;">
-                    <label class="radio-item"><input type="radio" name="vertebral" value="Normal"> Normal</label>
-                    <label class="radio-item"><input type="radio" name="vertebral" value="With Deformity"> With Deformity</label>
-                </div>
-
-                <label class="f-label" style="margin-bottom:10px;">Skin</label>
-                <div class="checkbox-grid cols-3" style="margin-bottom:10px;">
-                    <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Pallor</label>
-                    <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Rashes</label>
-                    <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Lesions</label>
-                </div>
-                <div class="f-grid-2" style="margin-bottom:16px;">
-                    <div>
-                        <label class="f-label">Scars</label>
-                        <div class="radio-group">
-                            <label class="radio-item"><input type="radio" name="scars" value="Absent"> Absent</label>
-                            <label class="radio-item"><input type="radio" name="scars" value="Present"> Present</label>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Working Impression -->
                 <div class="f-section-title"><i class="bi bi-clipboard-check"></i> Working Impression</div>
                 <div class="f-grid-2">
                     <div class="f-group">
@@ -987,27 +1043,6 @@
                     <div class="f-group">
                         <label class="f-label">For Work-Up</label>
                         <input class="f-control" type="text" placeholder="Specify if any...">
-                    </div>
-                </div>
-                <div class="f-group">
-                    <label class="f-label">Referred to</label>
-                    <div class="checkbox-grid cols-3" style="margin-bottom:8px;">
-                        <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Cardio</label>
-                        <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Pulmo</label>
-                        <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Derma</label>
-                        <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> ENT</label>
-                        <label class="check-item"><input type="checkbox" onchange="toggleCheck(this)"> Optha</label>
-                    </div>
-                    <input class="f-control" type="text" placeholder="Others (specify)..." style="margin-top:8px;">
-                </div>
-                <div class="f-grid-2">
-                    <div class="f-group">
-                        <label class="f-label">Follow-up Date</label>
-                        <input class="f-control" type="date">
-                    </div>
-                    <div class="f-group">
-                        <label class="f-label">Physician's Notes</label>
-                        <textarea class="f-control" style="min-height:75px;" placeholder="Additional notes..."></textarea>
                     </div>
                 </div>
             </form>
@@ -1020,84 +1055,299 @@
 </div>
 
 <!-- ============================================================ -->
-<!-- MODAL: Medical Clearance -->
+<!-- MODAL: Medical Clearance — STUDENT                           -->
 <!-- ============================================================ -->
-<div class="modal-overlay" id="modal-clearance">
+<div class="modal-overlay" id="modal-clearance-student">
     <div class="modal-box">
-        <div class="modal-head">
+        <div class="modal-head student-head">
             <div>
-                <div class="modal-head-title"><i class="bi bi-shield-check me-2"></i>Medical Clearance — Physically Fit</div>
+                <div class="modal-head-title"><i class="bi bi-mortarboard-fill me-2"></i>Medical Clearance — Student</div>
                 <div class="modal-head-sub">PUP Medical Services Department · Sta. Mesa, Manila</div>
             </div>
-            <button class="modal-close-btn" onclick="closeModal('clearance')">&times;</button>
+            <button class="modal-close-btn" onclick="closeModal('clearance-student')">&times;</button>
         </div>
         <div class="modal-scroll">
-            <form id="form-clearance" onsubmit="saveForm(event,'clearance')">
+            <form id="form-clearance-student" onsubmit="saveForm(event,'clearance-student')">
 
-                <div class="pup-header">
-                    <div class="pup-title">Republic of the Philippines<br>POLYTECHNIC UNIVERSITY OF THE PHILIPPINES · Manila</div>
-                    <div class="pup-sub" style="font-weight:700; font-size:15px; margin-top:6px; color:var(--primary-color);">Medical CLEARANCE — PHYSICALLY FIT</div>
+                <!-- Official Certificate Preview layout -->
+                <div class="cert-document">
+                    <div class="cert-header">
+                        <div class="cert-logo">PUP</div>
+                        <div class="cert-header-text">
+                            <div class="rep">Republic of the Philippines</div>
+                            <div class="univ">POLYTECHNIC UNIVERSITY OF THE PHILIPPINES</div>
+                            <div class="loc">Manila</div>
+                        </div>
+                    </div>
+                    <div class="cert-title-block">
+                        <div class="main-title">Medical CLEARANCE</div>
+                        <div class="sub-title">PHYSICALLY FIT</div>
+                    </div>
+                    <div class="cert-body-text">
+                        <p>Date &nbsp;<span class="cert-field-line" id="s-preview-date" style="min-width:180px;">_______________</span></p>
+                        <br>
+                        <p>To Whom It May Concern:</p>
+                        <br>
+                        <p>This is to certify that</p>
+                        <span class="cert-field-line full" id="s-preview-name" style="display:block; min-width:100%; margin:6px 0;">&nbsp;</span>
+                        <p>has been examined by the undersigned and found to be <strong>physically fit</strong> at the time of examination.</p>
+                        <br>
+                        <p>This certification is issued upon his/her request for</p>
+                        <span class="cert-field-line full" id="s-preview-purpose" style="display:block; min-width:100%; margin:6px 0;">&nbsp;</span>
+                        <span class="cert-field-line full" id="s-preview-purpose2" style="display:block; min-width:100%; margin:0 0 4px;">&nbsp;</span>
+                        <p>purpose but not for medico-legal reason.</p>
+                    </div>
+                    <div class="cert-sig-block">
+                        <div class="cert-sig-line" id="s-preview-physician">_________________________ M.D.</div>
+                        <div class="cert-sig-detail">Lic No. <span id="s-preview-license">_______________</span></div>
+                    </div>
+                    <div class="cert-form-ref">Medical 03 · Rev 1 · PUP-LAFO-6-MEDS · Medical Services Department</div>
                 </div>
 
-                <div class="f-section-title"><i class="bi bi-person"></i> Patient Information</div>
+                <!-- Form fields -->
+                <div class="role-badge student"><i class="bi bi-mortarboard-fill"></i> Student Clearance</div>
+
+                <div class="f-section-title purple-title"><i class="bi bi-person"></i> Student Information</div>
                 <div class="f-grid-3">
-                    <div class="f-group" style="grid-column:span 2;">
-                        <label class="f-label">Patient's Full Name <span class="req">*</span></label>
-                        <input class="f-control" type="text" placeholder="Last, First Middle" required>
+                    <div class="f-group" style="grid-column: span 2;">
+                        <label class="f-label">Student's Full Name <span class="req">*</span></label>
+                        <input class="f-control purple-focus" type="text" id="s-name" placeholder="Last, First Middle Name" required
+                            oninput="liveUpdate('s-preview-name', this.value)">
                     </div>
                     <div class="f-group">
-                        <label class="f-label">Date of Clearance <span class="req">*</span></label>
-                        <input class="f-control" type="date" required id="cl-date">
+                        <label class="f-label">Date <span class="req">*</span></label>
+                        <input class="f-control purple-focus" type="date" id="s-date" required
+                            oninput="liveUpdateDate('s-preview-date', this.value)">
+                    </div>
+                </div>
+                <div class="f-grid-3">
+                    <div class="f-group">
+                        <label class="f-label">Student Number <span class="req">*</span></label>
+                        <input class="f-control purple-focus" type="text" placeholder="e.g., 2023-12345-MN-0" required>
+                    </div>
+                    <div class="f-group">
+                        <label class="f-label">Course</label>
+                        <input class="f-control purple-focus" type="text" placeholder="e.g., BSIT">
+                    </div>
+                    <div class="f-group">
+                        <label class="f-label">College</label>
+                        <input class="f-control purple-focus" type="text" placeholder="e.g., CCS">
                     </div>
                 </div>
                 <div class="f-grid-2">
                     <div class="f-group">
-                        <label class="f-label">ID / Student Number</label>
-                        <input class="f-control" type="text" placeholder="e.g., 2023-12345-MN-0">
+                        <label class="f-label">Year Level</label>
+                        <select class="f-control purple-focus">
+                            <option value="">Select Year</option>
+                            <option>1st Year</option>
+                            <option>2nd Year</option>
+                            <option>3rd Year</option>
+                            <option>4th Year</option>
+                            <option>5th Year</option>
+                            <option>Graduate</option>
+                        </select>
                     </div>
                     <div class="f-group">
-                        <label class="f-label">College / Department</label>
-                        <input class="f-control" type="text" placeholder="e.g., CCS">
+                        <label class="f-label">School Year / Semester</label>
+                        <input class="f-control purple-focus" type="text" placeholder="e.g., AY 2025-2026, 2nd Sem">
+                    </div>
+                </div>
+
+                <div class="f-section-title purple-title"><i class="bi bi-file-text"></i> Clearance Details</div>
+                <div class="f-group" style="margin-bottom:18px;">
+                    <label class="f-label">Purpose of Clearance <span class="req">*</span></label>
+                    <input class="f-control purple-focus" type="text" id="s-purpose"
+                        placeholder="e.g., Off-campus activity, Immersion, OJT, Practicum, Sports event, Enrollment"
+                        required oninput="liveUpdate('s-preview-purpose', this.value)">
+                </div>
+                <div class="f-group" style="margin-bottom:18px;">
+                    <label class="f-label">Additional Remarks / Conditions</label>
+                    <textarea class="f-control purple-focus" placeholder="e.g., With noted conditions but cleared for the stated purpose..." style="min-height:75px;"></textarea>
+                </div>
+
+                <div class="f-section-title purple-title"><i class="bi bi-pen"></i> Issuing Physician</div>
+                <div class="f-grid-2">
+                    <div class="f-group">
+                        <label class="f-label">Physician's Name <span class="req">*</span></label>
+                        <input class="f-control purple-focus" type="text" id="s-physician"
+                            value="FELICITAS A. BERMUDEZ, M.D." required
+                            oninput="liveUpdate('s-preview-physician', this.value + ' M.D.')">
+                    </div>
+                    <div class="f-group">
+                        <label class="f-label">License Number</label>
+                        <input class="f-control purple-focus" type="text" id="s-license"
+                            value="0115224" oninput="liveUpdate('s-preview-license', this.value)">
+                    </div>
+                </div>
+                <div class="sign-box">
+                    <i class="bi bi-pen-fill" style="font-size:20px; margin-bottom:6px; display:block; color:#b91c1c;"></i>
+                    Physician's signature will be affixed on the printed form
+                </div>
+            </form>
+        </div>
+        <div class="modal-actions">
+            <button class="btn-modal-cancel" onclick="closeModal('clearance-student')"><i class="bi bi-x-circle"></i> Cancel</button>
+            <button class="btn-modal-save purple-btn" onclick="document.getElementById('form-clearance-student').requestSubmit()">
+                <i class="bi bi-shield-check"></i> Issue Student Clearance
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODAL: Medical Clearance — FACULTY / EMPLOYEE               -->
+<!-- ============================================================ -->
+<div class="modal-overlay" id="modal-clearance-faculty">
+    <div class="modal-box">
+        <div class="modal-head">
+            <div>
+                <div class="modal-head-title"><i class="bi bi-person-badge-fill me-2"></i>Medical Clearance — Employee</div>
+                <div class="modal-head-sub">PUP Medical Services Department · Sta. Mesa, Manila</div>
+            </div>
+            <button class="modal-close-btn" onclick="closeModal('clearance-faculty')">&times;</button>
+        </div>
+        <div class="modal-scroll">
+            <form id="form-clearance-faculty" onsubmit="saveForm(event,'clearance-faculty')">
+
+                <!-- Official Certificate Preview layout -->
+                <div class="cert-document">
+                    <div class="cert-header">
+                        <div class="cert-logo">PUP</div>
+                        <div class="cert-header-text">
+                            <div class="rep">Republic of the Philippines</div>
+                            <div class="univ">POLYTECHNIC UNIVERSITY OF THE PHILIPPINES</div>
+                            <div class="loc">Manila</div>
+                        </div>
+                    </div>
+                    <div class="cert-title-block">
+                        <div class="main-title">Medical CLEARANCE</div>
+                        <div class="sub-title">PHYSICALLY FIT</div>
+                    </div>
+                    <div class="cert-body-text">
+                        <p>Date &nbsp;<span class="cert-field-line" id="f-preview-date" style="min-width:180px;">_______________</span></p>
+                        <br>
+                        <p>To Whom It May Concern:</p>
+                        <br>
+                        <p>This is to certify that</p>
+                        <span class="cert-field-line full" id="f-preview-name" style="display:block; min-width:100%; margin:6px 0;">&nbsp;</span>
+                        <p>has been examined by the undersigned and found to be <strong>physically fit</strong> at the time of examination.</p>
+                        <br>
+                        <p>This certification is issued upon his/her request for</p>
+                        <span class="cert-field-line full" id="f-preview-purpose" style="display:block; min-width:100%; margin:6px 0;">&nbsp;</span>
+                        <span class="cert-field-line full" id="f-preview-purpose2" style="display:block; min-width:100%; margin:0 0 4px;">&nbsp;</span>
+                        <p>purpose but not for medico-legal reason.</p>
+                    </div>
+                    <div class="cert-sig-block">
+                        <div class="cert-sig-line" id="f-preview-physician">_________________________ M.D.</div>
+                        <div class="cert-sig-detail">Lic No. <span id="f-preview-license">_______________</span></div>
+                    </div>
+                    <div class="cert-form-ref">Medical 03 · Rev 1 · PUP-LAFO-6-MEDS · Medical Services Department</div>
+                </div>
+
+                <!-- Form fields -->
+                <div class="role-badge faculty"><i class="bi bi-person-badge-fill"></i> Employee Clearance</div>
+
+                <div class="f-section-title"><i class="bi bi-person"></i> Employee Information</div>
+                <div class="f-grid-3">
+                    <div class="f-group" style="grid-column: span 2;">
+                        <label class="f-label">Employee's Full Name <span class="req">*</span></label>
+                        <input class="f-control" type="text" id="f-name" placeholder="Last, First Middle Name" required
+                            oninput="liveUpdate('f-preview-name', this.value)">
+                    </div>
+                    <div class="f-group">
+                        <label class="f-label">Date <span class="req">*</span></label>
+                        <input class="f-control" type="date" id="f-date" required
+                            oninput="liveUpdateDate('f-preview-date', this.value)">
+                    </div>
+                </div>
+
+                <div class="faculty-fields">
+                    <div style="font-size:12px; font-weight:700; color:#92400e; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.5px;">
+                        <i class="bi bi-briefcase-fill me-1"></i> Employment Details
+                    </div>
+                    <div class="f-grid-3">
+                        <div class="f-group">
+                            <label class="f-label">Employee / Faculty ID</label>
+                            <input class="f-control" type="text" placeholder="Employee ID number">
+                        </div>
+                        <div class="f-group">
+                            <label class="f-label">Position / Designation</label>
+                            <input class="f-control" type="text" placeholder="e.g., Associate Professor I">
+                        </div>
+                        <div class="f-group">
+                            <label class="f-label">Employment Type</label>
+                            <select class="f-control">
+                                <option value="">Select</option>
+                                <option>Permanent</option>
+                                <option>Temporary</option>
+                                <option>Part-time / Contractual</option>
+                                <option>Job Order</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="f-grid-2">
+                        <div class="f-group">
+                            <label class="f-label">Department / College</label>
+                            <input class="f-control" type="text" placeholder="e.g., Department of CS, CCS">
+                        </div>
+                        <div class="f-group">
+                            <label class="f-label">Campus</label>
+                            <select class="f-control">
+                                <option value="">Select Campus</option>
+                                <option>PUP Manila (Sta. Mesa)</option>
+                                <option>PUP Bataan</option>
+                                <option>PUP Calauan</option>
+                                <option>PUP Lopez</option>
+                                <option>PUP Maragondon</option>
+                                <option>PUP Mulanay</option>
+                                <option>PUP Paranaque</option>
+                                <option>PUP Quezon City</option>
+                                <option>PUP San Juan</option>
+                                <option>PUP Santa Rosa</option>
+                                <option>PUP Sto. Tomas</option>
+                                <option>PUP Taguig</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
                 <div class="f-section-title"><i class="bi bi-file-text"></i> Clearance Details</div>
-
-                <div class="consent-text" style="font-size:14px; line-height:2;">
-                    This is to certify that
-                    <strong style="border-bottom:1px solid #aaa; padding: 0 40px; display:inline-block; min-width:250px;">&nbsp;</strong>
-                    has been examined by the undersigned and found to be <strong>physically fit</strong> at the time of examination.
-                </div>
-
-                <div class="f-group">
+                <div class="f-group" style="margin-bottom:18px;">
                     <label class="f-label">Purpose of Clearance <span class="req">*</span></label>
-                    <input class="f-control" type="text" placeholder="e.g., Off-campus activity, Practicum, Enrollment, Graduation" required>
+                    <input class="f-control" type="text" id="f-purpose"
+                        placeholder="e.g., Return to work, Pre-employment requirement, Official travel, Annual check-up"
+                        required oninput="liveUpdate('f-preview-purpose', this.value)">
                 </div>
-                <div class="f-group">
+                <div class="f-group" style="margin-bottom:18px;">
                     <label class="f-label">Additional Remarks / Conditions</label>
-                    <textarea class="f-control" placeholder="e.g., With noted conditions but cleared for the stated purpose..." style="min-height:80px;"></textarea>
+                    <textarea class="f-control" placeholder="e.g., With noted conditions but cleared for the stated purpose..." style="min-height:75px;"></textarea>
                 </div>
 
                 <div class="f-section-title"><i class="bi bi-pen"></i> Issuing Physician</div>
                 <div class="f-grid-2">
                     <div class="f-group">
                         <label class="f-label">Physician's Name <span class="req">*</span></label>
-                        <input class="f-control" type="text" value="FELICITAS A. BERMUDEZ, M.D." required>
+                        <input class="f-control" type="text" id="f-physician"
+                            value="FELICITAS A. BERMUDEZ, M.D." required
+                            oninput="liveUpdate('f-preview-physician', this.value + ' M.D.')">
                     </div>
                     <div class="f-group">
                         <label class="f-label">License Number</label>
-                        <input class="f-control" type="text" value="0115224">
+                        <input class="f-control" type="text" id="f-license"
+                            value="0115224" oninput="liveUpdate('f-preview-license', this.value)">
                     </div>
                 </div>
                 <div class="sign-box">
-                    <i class="bi bi-pen" style="font-size:24px; margin-bottom:8px; display:block;"></i>
+                    <i class="bi bi-pen-fill" style="font-size:20px; margin-bottom:6px; display:block; color:#b91c1c;"></i>
                     Physician's signature will be affixed on the printed form
                 </div>
             </form>
         </div>
         <div class="modal-actions">
-            <button class="btn-modal-cancel" onclick="closeModal('clearance')"><i class="bi bi-x-circle"></i> Cancel</button>
-            <button class="btn-modal-save" onclick="document.getElementById('form-clearance').requestSubmit()"><i class="bi bi-check-circle"></i> Issue Clearance</button>
+            <button class="btn-modal-cancel" onclick="closeModal('clearance-faculty')"><i class="bi bi-x-circle"></i> Cancel</button>
+            <button class="btn-modal-save" onclick="document.getElementById('form-clearance-faculty').requestSubmit()">
+                <i class="bi bi-shield-check"></i> Issue Employee Clearance
+            </button>
         </div>
     </div>
 </div>
@@ -1116,12 +1366,10 @@
         </div>
         <div class="modal-scroll">
             <form id="form-consent" onsubmit="saveForm(event,'consent')">
-
                 <div class="pup-header">
                     <div class="pup-title">Declaration of Medical Information and<br>Data Subject Consent Form</div>
                     <div class="pup-sub">Polytechnic University of the Philippines — Medical Services Department</div>
                 </div>
-
                 <div class="f-section-title"><i class="bi bi-person"></i> Patient Information</div>
                 <div class="f-grid-3">
                     <div class="f-group" style="grid-column:span 2;">
@@ -1143,24 +1391,20 @@
                         <input class="f-control" type="text" placeholder="e.g., CCS">
                     </div>
                 </div>
-
                 <div class="f-section-title"><i class="bi bi-file-text"></i> Declaration of Medical Information</div>
                 <div class="consent-text">
                     I hereby certify that the medical health information given to the physician and nurses of Polytechnic University of the Philippines (PUP) during my on-site consultation for the issuance of medical clearance for off-campus activity/ies are true, correct and complete to the best of my knowledge. I have fully disclosed all the medical condition that may affect in the assessment to endorse my participation in the activity/ties as a student of PUP.
                     <br><br>
                     I also understand that the PUP Medical Services and University will not be liable for any untoward incident that may arise due to my failure to disclose accurate information or intentionally providing false and deceptive information.
                 </div>
-
                 <div class="f-group">
                     <label class="f-label">Activity / Purpose of Consultation <span class="req">*</span></label>
                     <input class="f-control" type="text" placeholder="e.g., Off-campus immersion, OJT, Sports event..." required>
                 </div>
-
                 <div class="f-section-title"><i class="bi bi-shield-lock"></i> Data Privacy Consent</div>
                 <div class="consent-text">
                     In compliance with the <strong>Data Privacy Act of 2012</strong> and its Implementing Rules and Regulations, I voluntarily consent to the collection, processing and storage of my personal and health information for the purpose/s of health assessment, treatment, and/or research (following research ethics guidelines) for the improvement of healthcare services.
                 </div>
-
                 <div class="f-section-title"><i class="bi bi-pen"></i> Signatures</div>
                 <div class="f-grid-2">
                     <div class="f-group">
@@ -1176,20 +1420,107 @@
                     <i class="bi bi-pen" style="font-size:22px; margin-bottom:6px; display:block;"></i>
                     Student's Signature Over Printed Name — to be signed on printed form
                 </div>
-
-                <div class="f-group">
-                    <label class="f-label">Remarks</label>
-                    <textarea class="f-control" placeholder="Additional remarks from the nurse or physician..." style="min-height:70px;"></textarea>
-                </div>
-
                 <div style="background:#fff7ed; border:1.5px solid #fed7aa; border-radius:10px; padding:14px 16px; font-size:12px; color:#92400e; margin-top:10px;">
-                    <i class="bi bi-info-circle"></i> <strong>Note:</strong> Both student and guardian must affix their signature if the student is aged below 18 years old. The guardian's signature section will be available on the printed form.
+                    <i class="bi bi-info-circle"></i> <strong>Note:</strong> Both student and guardian must affix their signature if the student is aged below 18 years old.
                 </div>
             </form>
         </div>
         <div class="modal-actions">
             <button class="btn-modal-cancel" onclick="closeModal('consent')"><i class="bi bi-x-circle"></i> Cancel</button>
             <button class="btn-modal-save" onclick="document.getElementById('form-consent').requestSubmit()"><i class="bi bi-check-circle"></i> Save Consent Record</button>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MODAL: Medical Certificate -->
+<!-- ============================================================ -->
+<div class="modal-overlay" id="modal-certificate">
+    <div class="modal-box" style="max-width:860px;">
+        <div class="modal-head">
+            <div>
+                <div class="modal-head-title"><i class="bi bi-file-earmark-medical me-2"></i>Medical Certificate</div>
+                <div class="modal-head-sub">PUP Ttech Clinic · Medical Services Department</div>
+            </div>
+            <button class="modal-close-btn" onclick="closeModal('certificate')">&times;</button>
+        </div>
+        <div class="modal-scroll">
+            <div id="cert-form-step">
+                <form id="form-certificate" onsubmit="generateCertPreview(event)">
+                    <div class="f-section-title"><i class="bi bi-person"></i> Patient & Issue Details</div>
+                    <div class="f-grid-3">
+                        <div class="f-group">
+                            <label class="f-label">Issue Date <span class="req">*</span></label>
+                            <input class="f-control" type="date" id="cert-issue-date" required>
+                        </div>
+                        <div class="f-group" style="grid-column:span 2;">
+                            <label class="f-label">Student / Patient Name <span class="req">*</span></label>
+                            <input class="f-control" type="text" id="cert-student-name" placeholder="Full Name" required>
+                        </div>
+                    </div>
+                    <div class="f-group" style="margin-bottom:18px;">
+                        <label class="f-label">Diagnosis <span class="req">*</span></label>
+                        <textarea class="f-control" id="cert-diagnosis" placeholder="Enter diagnosis or assessment..." required></textarea>
+                    </div>
+                    <div class="f-group" style="margin-bottom:18px;">
+                        <label class="f-label">Remarks / Symptoms</label>
+                        <textarea class="f-control" id="cert-remarks" placeholder="Describe patient's main complaint or symptoms..." style="min-height:75px;"></textarea>
+                    </div>
+                    <div class="f-grid-3">
+                        <div class="f-group">
+                            <label class="f-label">Purpose <span class="req">*</span></label>
+                            <select class="f-control" id="cert-purpose" required>
+                                <option value="">Select Purpose</option>
+                                <option value="Sick Leave">Sick Leave</option>
+                                <option value="Medical Clearance">Medical Clearance</option>
+                                <option value="Fitness to Work/Study">Fitness to Work/Study</option>
+                                <option value="Excuse from PE/Activities">Excuse from PE/Activities</option>
+                                <option value="Legal/Court Requirements">Legal/Court Requirements</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="f-group">
+                            <label class="f-label">Clinic Physician <span class="req">*</span></label>
+                            <input class="f-control" type="text" id="cert-physician" placeholder="Dr. Full Name, M.D." required>
+                        </div>
+                        <div class="f-group">
+                            <label class="f-label">License Number <span class="req">*</span></label>
+                            <input class="f-control" type="text" id="cert-license" placeholder="e.g., 0115224" required>
+                        </div>
+                    </div>
+                    <div class="f-grid-2">
+                        <div class="f-group">
+                            <label class="f-label">Days of Rest (if applicable)</label>
+                            <input class="f-control" type="number" id="cert-days-rest" placeholder="Number of days" min="0">
+                        </div>
+                        <div class="f-group">
+                            <label class="f-label">Valid Until</label>
+                            <input class="f-control" type="date" id="cert-valid-until">
+                        </div>
+                    </div>
+                    <button type="submit" style="display:none;" id="cert-submit-trigger"></button>
+                </form>
+            </div>
+            <div id="cert-preview-step" style="display:none;">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:18px;">
+                    <button class="btn-modal-secondary" onclick="backToForm()" style="padding:8px 16px; font-size:13px;">
+                        <i class="bi bi-arrow-left"></i> Back to Form
+                    </button>
+                    <span style="font-size:13px; color:var(--text-gray);">Review the certificate below before printing or saving.</span>
+                </div>
+                <div class="cert-preview-box" id="cert-preview-content"></div>
+            </div>
+        </div>
+        <div class="modal-actions" id="cert-modal-actions">
+            <button class="btn-modal-cancel" onclick="closeModal('certificate')"><i class="bi bi-x-circle"></i> Cancel</button>
+            <button class="btn-modal-save" id="cert-generate-btn" onclick="document.getElementById('cert-submit-trigger').click()">
+                <i class="bi bi-eye"></i> Preview Certificate
+            </button>
+        </div>
+        <div class="modal-actions" id="cert-print-actions" style="display:none;">
+            <button class="btn-modal-cancel" onclick="closeModal('certificate')"><i class="bi bi-x-circle"></i> Close</button>
+            <button class="btn-modal-secondary" onclick="backToForm()"><i class="bi bi-pencil"></i> Edit</button>
+            <button class="btn-modal-save" onclick="printCertificate()"><i class="bi bi-printer"></i> Print Certificate</button>
         </div>
     </div>
 </div>
@@ -1206,7 +1537,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 <script>
     /* NAV */
-    const pageFiles = { dashboard:'nurse_dashboard.php', roster:'nurse_roster.php', appointments:'appointments.php', records:'patient_records.php', consultations:'consultations.php', certificate:'medical_cert.php', profile:'profile.php' };
+    const pageFiles = {
+        dashboard: 'nurse_dashboard.php',
+        roster: 'nurse_roster.php',
+        appointments: 'appointments.php',
+        records: 'patient_records.php',
+        consultations: 'consultations.php',
+        profile: 'profile.php'
+    };
     document.querySelectorAll('.nav-item').forEach(item => {
         item.addEventListener('click', function() {
             const f = pageFiles[this.getAttribute('data-page')];
@@ -1219,12 +1557,39 @@
     const now = new Date();
     const hh = String(now.getHours()).padStart(2,'0');
     const mm = String(now.getMinutes()).padStart(2,'0');
-    ['c-date','lab-date','he-date','cl-date','con-date','con-sign-date'].forEach(id => {
+    ['c-date','lab-date','he-date','con-date','con-sign-date','cert-issue-date','s-date','f-date'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = today;
     });
     const ct = document.getElementById('c-time');
     if (ct) ct.value = `${hh}:${mm}`;
+
+    // Init live previews with today's date
+    const todayFormatted = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+    ['s-preview-date','f-preview-date'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = todayFormatted;
+    });
+
+    /* LIVE PREVIEW HELPERS */
+    function liveUpdate(previewId, value) {
+        const el = document.getElementById(previewId);
+        if (!el) return;
+        el.textContent = value || '\u00A0';
+    }
+    function liveUpdateDate(previewId, value) {
+        const el = document.getElementById(id);
+        if (!value) return;
+        const formatted = new Date(value + 'T00:00:00').toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+        if (el) el.textContent = formatted;
+    }
+    // Fix: liveUpdateDate uses previewId not id
+    function liveUpdateDate(previewId, value) {
+        const el = document.getElementById(previewId);
+        if (!el || !value) return;
+        const formatted = new Date(value + 'T00:00:00').toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+        el.textContent = formatted;
+    }
 
     /* MODAL CONTROLS */
     function openModal(id) {
@@ -1234,24 +1599,25 @@
     function closeModal(id) {
         document.getElementById('modal-' + id).classList.remove('show');
         document.body.style.overflow = 'auto';
+        if (id === 'certificate') resetCertModal();
     }
 
-    /* CLOSE ON BACKDROP CLICK */
     document.querySelectorAll('.modal-overlay').forEach(m => {
         m.addEventListener('click', function(e) {
             if (e.target === this) {
                 this.classList.remove('show');
                 document.body.style.overflow = 'auto';
+                if (this.id === 'modal-certificate') resetCertModal();
             }
         });
     });
 
-    /* ESC KEY */
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape') {
             document.querySelectorAll('.modal-overlay.show').forEach(m => {
                 m.classList.remove('show');
                 document.body.style.overflow = 'auto';
+                if (m.id === 'modal-certificate') resetCertModal();
             });
         }
     });
@@ -1263,31 +1629,46 @@
 
     /* SAVE FORM */
     const formTitles = {
-        consultation: 'Consultation Saved!',
-        laboratory: 'Lab Request Submitted!',
-        healthexam: 'Health Exam Record Saved!',
-        clearance: 'Medical Clearance Issued!',
-        consent: 'Consent Record Saved!'
+        'consultation': 'Consultation Saved!',
+        'laboratory': 'Lab Request Submitted!',
+        'healthexam': 'Health Exam Record Saved!',
+        'clearance-student': 'Student Clearance Issued!',
+        'clearance-faculty': 'Faculty Clearance Issued!',
+        'consent': 'Consent Record Saved!'
     };
     const formMsgs = {
-        consultation: 'The consultation record has been successfully documented.',
-        laboratory: 'Laboratory examination request has been recorded.',
-        healthexam: 'Health examination record has been saved successfully.',
-        clearance: 'Medical clearance has been issued and recorded.',
-        consent: 'Patient consent form has been saved.'
+        'consultation': 'The consultation record has been successfully documented.',
+        'laboratory': 'Laboratory examination request has been recorded.',
+        'healthexam': 'Health examination record has been saved successfully.',
+        'clearance-student': 'Medical clearance for student has been issued and recorded.',
+        'clearance-faculty': 'Medical clearance for faculty/employee has been issued and recorded.',
+        'consent': 'Patient consent form has been saved.'
     };
 
     function saveForm(e, id) {
         e.preventDefault();
         closeModal(id);
-        showToast(formTitles[id], formMsgs[id]);
+        showToast(formTitles[id] || 'Saved!', formMsgs[id] || 'Form successfully submitted.');
         setTimeout(() => {
-            document.getElementById('form-' + id).reset();
-            // Re-set dates
-            ['c-date','lab-date','he-date','cl-date','con-date','con-sign-date'].forEach(did => {
+            const form = document.getElementById('form-' + id);
+            if (form) form.reset();
+            ['c-date','lab-date','he-date','con-date','con-sign-date','s-date','f-date'].forEach(did => {
                 const el = document.getElementById(did);
                 if (el) el.value = today;
             });
+            // Reset live previews
+            ['s-preview-date','f-preview-date'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = todayFormatted;
+            });
+            ['s-preview-name','f-preview-name','s-preview-purpose','f-preview-purpose'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = '\u00A0';
+            });
+            const sp = document.getElementById('s-preview-physician');
+            if (sp) sp.textContent = 'FELICITAS A. BERMUDEZ, M.D. M.D.';
+            const fp = document.getElementById('f-preview-physician');
+            if (fp) fp.textContent = 'FELICITAS A. BERMUDEZ, M.D. M.D.';
         }, 400);
     }
 
@@ -1299,6 +1680,91 @@
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 3500);
     }
+
+    /* MEDICAL CERTIFICATE */
+    function generateCertPreview(e) {
+        e.preventDefault();
+        const issueDate   = document.getElementById('cert-issue-date').value;
+        const studentName = document.getElementById('cert-student-name').value;
+        const diagnosis   = document.getElementById('cert-diagnosis').value;
+        const remarks     = document.getElementById('cert-remarks').value;
+        const purpose     = document.getElementById('cert-purpose').value;
+        const physician   = document.getElementById('cert-physician').value;
+        const license     = document.getElementById('cert-license').value;
+        const daysRest    = document.getElementById('cert-days-rest').value;
+        const validUntil  = document.getElementById('cert-valid-until').value;
+        const fmtDate = d => new Date(d + 'T00:00:00').toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+        let restStatement = '';
+        if (daysRest && parseInt(daysRest) > 0) {
+            restStatement = ` and is advised to rest for <span class="cert-field">${daysRest} day(s)</span>`;
+        }
+        let validStatement = '';
+        if (validUntil) {
+            validStatement = `<p style="margin-top:6px;"><strong>Valid Until:</strong> <span class="cert-field">${fmtDate(validUntil)}</span></p>`;
+        }
+        document.getElementById('cert-preview-content').innerHTML = `
+            <div class="cert-title">MEDICAL CERTIFICATE</div>
+            <div class="cert-clinic-name">PUP Ttech Clinic — Medical Services Department</div>
+            <div class="cert-body">
+                <p><strong>Date:</strong> ${fmtDate(issueDate)}</p><br>
+                <p>TO WHOM IT MAY CONCERN:</p><br>
+                <p>This is to certify that <span class="cert-field">${studentName}</span> was examined and treated at this clinic on <span class="cert-field">${fmtDate(issueDate)}</span>.</p><br>
+                <p><strong>Diagnosis:</strong> <span class="cert-field">${diagnosis}</span></p>
+                ${remarks ? `<p><strong>Remarks:</strong> ${remarks}</p>` : ''}
+                <br>
+                <p>This certificate is issued for the purpose of <span class="cert-field">${purpose}</span>${restStatement}.</p>
+                ${validStatement}
+            </div>
+            <div class="cert-sig">
+                <div class="cert-sig-line">${physician}</div>
+                <div style="font-size:12px; margin-top:4px; text-align:right;">Attending Physician</div>
+                <div style="font-size:12px; text-align:right;">License No: ${license}</div>
+            </div>
+        `;
+        document.getElementById('cert-form-step').style.display = 'none';
+        document.getElementById('cert-preview-step').style.display = 'block';
+        document.getElementById('cert-modal-actions').style.display = 'none';
+        document.getElementById('cert-print-actions').style.display = 'flex';
+    }
+
+    function backToForm() {
+        document.getElementById('cert-form-step').style.display = 'block';
+        document.getElementById('cert-preview-step').style.display = 'none';
+        document.getElementById('cert-modal-actions').style.display = 'flex';
+        document.getElementById('cert-print-actions').style.display = 'none';
+    }
+
+    function resetCertModal() { backToForm(); }
+
+    function printCertificate() {
+        const content = document.getElementById('cert-preview-content').innerHTML;
+        const win = window.open('', '_blank');
+        win.document.write(`<!DOCTYPE html><html><head><title>Medical Certificate</title>
+            <style>
+                body { font-family:'Times New Roman',serif; padding:60px; color:#1f2937; }
+                .cert-title { font-size:26px; font-weight:bold; color:#7f1d1d; text-align:center; margin-bottom:8px; }
+                .cert-clinic-name { font-size:16px; font-weight:600; text-align:center; margin-bottom:18px; padding-bottom:16px; border-bottom:2px solid #7f1d1d; }
+                .cert-body { line-height:2; font-size:14px; margin:24px 0; }
+                .cert-field { font-weight:bold; color:#7f1d1d; }
+                .cert-sig { margin-top:60px; text-align:right; }
+                .cert-sig-line { border-top:2px solid #1f2937; width:240px; margin-left:auto; padding-top:6px; font-weight:600; font-size:14px; }
+            </style></head><body>${content}</body></html>`);
+        win.document.close();
+        win.focus();
+        win.print();
+        win.close();
+        closeModal('certificate');
+        showToast('Certificate Printed!', 'Medical certificate has been sent to the printer.');
+    }
+
+    document.getElementById('cert-days-rest').addEventListener('input', function() {
+        const days = parseInt(this.value);
+        if (days > 0) {
+            const base = new Date(document.getElementById('cert-issue-date').value + 'T00:00:00');
+            base.setDate(base.getDate() + days);
+            document.getElementById('cert-valid-until').value = base.toISOString().split('T')[0];
+        }
+    });
 </script>
 </body>
 </html>
