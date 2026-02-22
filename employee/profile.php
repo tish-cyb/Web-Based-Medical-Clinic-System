@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Portal - Profile</title>
+    <title>Employee Portal - Profile</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
@@ -503,12 +503,12 @@
 <body>
     <div class="sidebar">
         <div class="sidebar-header">
-            <h1>Student Portal</h1>
+            <h1>Employee Portal</h1>
             <p>Medical Services</p>
         </div>
         
         <nav class="sidebar-nav">
-            <a href="student_dashboard.php" class="nav-item" style="text-decoration: none; color: inherit;">
+            <a href="employee_dashboard.php" class="nav-item" style="text-decoration: none; color: inherit;">
                 <i class="bi bi-speedometer2"></i>
                 <span>Dashboard</span>
             </a>
@@ -572,7 +572,7 @@
 
     <main class="main-content">
         <div class="page-header">
-            <h2>Student Profile</h2>
+            <h2>Employee Profile</h2>
             <p>Manage your personal information and account settings</p>
         </div>
 
@@ -587,7 +587,7 @@
                         <input type="text" value="Juan Dela Cruz" readonly>
                     </div>
                     <div class="form-group">
-                        <label>Student Number</label>
+                        <label>Employee Number</label>
                         <input type="text" value="2021-12345" readonly>
                     </div>
                     <div class="form-group">
@@ -741,15 +741,15 @@
             const lowerMessage = message.toLowerCase();
             
             if (lowerMessage.includes('edit') || lowerMessage.includes('update') || lowerMessage.includes('change info')) {
-                return "To edit your profile:\n1. Click the 'Edit Profile' button\n2. Update the information you want to change\n3. Save your changes\n\nNote: Some fields like Student Number cannot be changed.";
+                return "To edit your profile:\n1. Click the 'Edit Profile' button\n2. Update the information you want to change\n3. Save your changes\n\nNote: Some fields like Employee Number cannot be changed.";
             } else if (lowerMessage.includes('password') || lowerMessage.includes('security')) {
                 return "To change your password:\n1. Click 'Edit Profile'\n2. Look for the 'Change Password' section\n3. Enter your current password\n4. Enter and confirm your new password\n\nMake sure your password is strong and secure!";
             } else if (lowerMessage.includes('emergency') || lowerMessage.includes('contact')) {
                 return "Your emergency contact is: Maria Dela Cruz - +63 9917 123 4567\n\nTo update it, click 'Edit Profile' and modify the Emergency Contact field. This is important for medical emergencies!";
             } else if (lowerMessage.includes('email') || lowerMessage.includes('phone') || lowerMessage.includes('number')) {
                 return "Your contact information:\n• Email: maria.garcia@pup.edu.ph\n• Phone: +63 917 123 4567\n\nYou can update these by clicking 'Edit Profile'. Make sure to use valid contact details!";
-            } else if (lowerMessage.includes('student number') || lowerMessage.includes('id')) {
-                return "Your student number is: 2021-12345\n\nThis cannot be changed as it's your unique identifier in the system. Contact the registrar if you believe there's an error.";
+            } else if (lowerMessage.includes('employee number') || lowerMessage.includes('id')) {
+                return "Your employee number is: EMP-2021-12345\n\nThis cannot be changed as it's your unique identifier in the system. Contact the HR department if you believe there's an error.";
             } else if (lowerMessage.includes('logout') || lowerMessage.includes('sign out')) {
                 return "To logout:\n1. Click the red 'Logout' button at the bottom of your profile\n2. Confirm you want to logout\n\nYou'll be redirected to the login page. Remember to logout on shared devices!";
             } else if (lowerMessage.includes('program') || lowerMessage.includes('course')) {
