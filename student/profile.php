@@ -478,6 +478,84 @@
             background-color: var(--primary-light);
         }
 
+        /* ── Emergency Contact Section Styles (ADDED) ── */
+        .emergency-section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 20px;
+            background-color: var(--primary-soft);
+            border: 1px solid #fca5a5;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        .emergency-section-header i {
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+
+        .emergency-section-header span {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .emergency-section-header .badge-required {
+            margin-left: auto;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-group label .required-asterisk {
+            color: #dc2626;
+            margin-left: 3px;
+        }
+
+        .form-group input.required-field {
+            border-color: #fca5a5;
+            background-color: #fff;
+        }
+
+        .form-group input.required-field:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(127, 29, 29, 0.1);
+        }
+
+        .form-group select {
+            padding: 12px 16px;
+            border: 1px solid #fca5a5;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            background-color: #fff;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            cursor: pointer;
+        }
+
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(127, 29, 29, 0.1);
+        }
+
+        .form-group select:disabled {
+            background-color: #f9fafb;
+            cursor: default;
+        }
+        /* ── End Emergency Contact Section Styles ── */
+
         @media (max-width: 1200px) {
             .form-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -611,12 +689,64 @@
                     </div>
                 </div>
 
+                <!-- ═══════════════════════════════════════════════════════ -->
+                <!-- ADDED: Expanded Emergency Contact Section               -->
+                <!-- ═══════════════════════════════════════════════════════ -->
                 <div class="form-grid">
-                    <div class="form-group form-group-full">
-                        <label>Emergency Contact</label>
-                        <input type="text" value="Maria Dela Cruz - +63 9917 123 4567" readonly>
+                    <div class="form-group">
+                        <label>
+                            Emergency Contact Person
+                            <span class="required-asterisk">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="emergencyContactPerson"
+                            class="required-field"
+                            value="Maria Dela Cruz"
+                            placeholder="Full name of emergency contact"
+                            readonly
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Relationship to Student
+                            <span class="required-asterisk">*</span>
+                        </label>
+                        <select
+                            id="emergencyContactRelationship"
+                            required
+                            disabled
+                        >
+                            <option value="">-- Select Relationship --</option>
+                            <option value="parent" selected>Parent</option>
+                            <option value="sibling">Sibling</option>
+                            <option value="spouse">Spouse</option>
+                            <option value="guardian">Guardian</option>
+                            <option value="relative">Relative</option>
+                            <option value="friend">Friend</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Emergency Contact Number
+                            <span class="required-asterisk">*</span>
+                        </label>
+                        <input
+                            type="tel"
+                            id="emergencyContactNumber"
+                            class="required-field"
+                            value="+63 9917 123 4567"
+                            placeholder="+63 9XX XXX XXXX"
+                            readonly
+                            required
+                        >
                     </div>
                 </div>
+                <!-- ═══════════════════════════════════════════════════════ -->
+                <!-- END ADDED SECTION                                        -->
+                <!-- ═══════════════════════════════════════════════════════ -->
 
                 <div class="profile-actions">
                     <button class="btn-action btn-edit">
@@ -745,7 +875,7 @@
             } else if (lowerMessage.includes('password') || lowerMessage.includes('security')) {
                 return "To change your password:\n1. Click 'Edit Profile'\n2. Look for the 'Change Password' section\n3. Enter your current password\n4. Enter and confirm your new password\n\nMake sure your password is strong and secure!";
             } else if (lowerMessage.includes('emergency') || lowerMessage.includes('contact')) {
-                return "Your emergency contact is: Maria Dela Cruz - +63 9917 123 4567\n\nTo update it, click 'Edit Profile' and modify the Emergency Contact field. This is important for medical emergencies!";
+                return "Your emergency contact details are:\n• Person: Maria Dela Cruz\n• Relationship: Parent\n• Number: +63 9917 123 4567\n\nThese fields are required. To update them, click 'Edit Profile'. Keeping this info accurate is critical for medical emergencies!";
             } else if (lowerMessage.includes('email') || lowerMessage.includes('phone') || lowerMessage.includes('number')) {
                 return "Your contact information:\n• Email: maria.garcia@pup.edu.ph\n• Phone: +63 917 123 4567\n\nYou can update these by clicking 'Edit Profile'. Make sure to use valid contact details!";
             } else if (lowerMessage.includes('student number') || lowerMessage.includes('id')) {
@@ -771,6 +901,37 @@
                 sendMessage();
             }
         });
+
+        // ── ADDED: Edit Profile toggles emergency contact fields editable ──
+        const editBtn = document.querySelector('.btn-edit');
+        let isEditing = false;
+
+        editBtn.addEventListener('click', () => {
+            isEditing = !isEditing;
+
+            const emergencyPerson = document.getElementById('emergencyContactPerson');
+            const emergencyRelationship = document.getElementById('emergencyContactRelationship');
+            const emergencyNumber = document.getElementById('emergencyContactNumber');
+
+            if (isEditing) {
+                emergencyPerson.removeAttribute('readonly');
+                emergencyRelationship.removeAttribute('disabled');
+                emergencyNumber.removeAttribute('readonly');
+                editBtn.innerHTML = '<i class="bi bi-check-lg"></i> Save Changes';
+            } else {
+                // Validate required emergency fields before saving
+                if (!emergencyPerson.value.trim() || !emergencyRelationship.value || !emergencyNumber.value.trim()) {
+                    alert('Emergency Contact Person, Relationship, and Contact Number are required fields and cannot be left blank.');
+                    isEditing = true;
+                    return;
+                }
+                emergencyPerson.setAttribute('readonly', true);
+                emergencyRelationship.setAttribute('disabled', true);
+                emergencyNumber.setAttribute('readonly', true);
+                editBtn.innerHTML = '<i class="bi bi-pencil"></i> Edit Profile';
+            }
+        });
+        // ── END ADDED ──
 
         // Logout functionality
         const logoutBtn = document.querySelector('.btn-logout');
