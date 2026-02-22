@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Portal - Medical Services</title>
+    <title>Employee Portal - Medical Services</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
@@ -513,12 +513,12 @@
 <body>
     <div class="sidebar">
         <div class="sidebar-header">
-            <h1>Student Portal</h1>
+            <h1>Employee Portal</h1>
             <p>Medical Services</p>
         </div>
         
         <nav class="sidebar-nav">
-    <a href="student_dashboard.php" class="nav-item active" style="text-decoration: none; color: inherit;">
+    <a href="employee_dashboard.php" class="nav-item active" style="text-decoration: none; color: inherit;">
         <i class="bi bi-speedometer2"></i>
         <span>Dashboard</span>
     </a>
