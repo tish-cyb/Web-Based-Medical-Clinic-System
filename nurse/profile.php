@@ -875,8 +875,8 @@
         }
 
         function confirmLogout() {
-            // Redirect to index.php
-            window.location.href = 'index.php';
+            // Redirect to logout.php first
+            window.location.href = '../auth/logout.php';
         }
 
         // Close modal when clicking outside
@@ -892,6 +892,7 @@
                 closeLogoutModal();
             }
         });
+
     </script>
 </body>
 </html>
