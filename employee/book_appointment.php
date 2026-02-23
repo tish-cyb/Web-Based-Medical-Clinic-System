@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Portal - Book Appointment</title>
+    <title>Employee Portal - Book Appointment</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
@@ -730,12 +730,12 @@
 <body>
     <div class="sidebar">
         <div class="sidebar-header">
-            <h1>Student Portal</h1>
+            <h1>Employee Portal</h1>
             <p>Medical Services</p>
         </div>
         
         <nav class="sidebar-nav">
-            <a href="student_dashboard.php" class="nav-item" style="text-decoration: none; color: inherit;">
+            <a href="employee_dashboard.php" class="nav-item" style="text-decoration: none; color: inherit;">
                 <i class="bi bi-speedometer2"></i>
                 <span>Dashboard</span>
             </a>
@@ -810,9 +810,9 @@
             </div>
             <div class="section-content">
                 <ul class="requirements-list">
-                    <li>Valid Student ID</li>
+                    <li>Valid Employee ID</li>
                     <li>Clear reason for appointment</li>
-                    <li>Complete student information</li>
+                    <li>Complete employee information</li>
                     <li>Available appointment slot</li>
                 </ul>
             </div>
@@ -1007,7 +1007,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>Student Number</label>
+                    <label>Employee Number</label>
                     <input type="text" placeholder="e.g., 2021-12345-MN-0" style="max-width: 400px;">
                 </div>
                 <div class="form-group">
@@ -1178,7 +1178,7 @@
             } else if (lowerMessage.includes('time') || lowerMessage.includes('slot') || lowerMessage.includes('available')) {
                 return "Available time slots are from 6:30 AM to 5:20 PM, Monday to Friday. Select your preferred date in the calendar to see available times.";
             } else if (lowerMessage.includes('requirement') || lowerMessage.includes('document') || lowerMessage.includes('need')) {
-                return "You'll need:\n• Valid Student ID\n• Clear reason for appointment\n• Complete student information\n• Available appointment slot";
+                return "You'll need:\n• Valid Employee ID\n• Clear reason for appointment\n• Complete employee information\n• Available appointment slot";
             } else if (lowerMessage.includes('nurse') || lowerMessage.includes('doctor')) {
                 return "Our nurses are available at PUP iTech Clinic from 8:00 AM to 5:00 PM, Monday to Friday. You can select your preferred nurse after choosing a category.";
             } else if (lowerMessage.includes('cancel') || lowerMessage.includes('reschedule')) {

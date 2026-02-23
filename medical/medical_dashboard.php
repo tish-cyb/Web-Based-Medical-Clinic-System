@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nurse Portal - Clinical Management</title>
+    <title>Medical Portal - Clinical Management</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
@@ -282,7 +282,7 @@
 <body>
     <div class="sidebar">
         <div class="sidebar-header">
-            <h1>Nurse Portal</h1>
+            <h1>Medical Portal</h1>
             <p>Clinical Management</p>
         </div>
         
@@ -398,7 +398,7 @@
     <script>
         // Navigation functionality with file linking
         const pageFiles = {
-            'dashboard': 'nurse_dashboard.php',
+            'dashboard': 'medical_dashboard.php',
             'roster': 'student_roster.php',
             'appointments': 'appointments.php',
             'records': 'patient_records.php',

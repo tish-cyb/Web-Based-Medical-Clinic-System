@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login_btn'])) {
                 case 'Student':
                     header("Location: student_portal.php");
                     break;
-                case 'Staff':
+                case 'Medical Staff':
                     header("Location: staff_portal.php");
                     break;
                 case 'Administrator':
