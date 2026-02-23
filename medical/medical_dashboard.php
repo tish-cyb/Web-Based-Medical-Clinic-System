@@ -293,7 +293,7 @@
             </div>
             <div class="nav-item" data-page="roster">
                 <i class="bi bi-people"></i>
-                <span>Student Roster</span>
+                <span>Roster</span>
             </div>
             <div class="nav-item" data-page="appointments">
                 <i class="bi bi-calendar-check"></i>
@@ -307,7 +307,6 @@
                 <i class="bi bi-chat-dots"></i>
                 <span>Consultations</span>
             </div>
-            <div class="nav-item" data-page="certificate">
                 <i class="bi bi-file-earmark-medical"></i>
                 <span>Medical Certificate</span>
             </div>
@@ -403,7 +402,7 @@
             'appointments': 'appointments.php',
             'records': 'patient_records.php',
             'consultations': 'consultations.php',
-            'certificate': 'medical_cert.php',
+            'certificate': '',
             'profile': 'profile.php'
         };
 

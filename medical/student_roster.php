@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical Portal - Student Roster</title>
+    <title>Medical Portal - Roster</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
@@ -534,7 +534,7 @@
             </div>
             <div class="nav-item active" data-page="roster">
                 <i class="bi bi-people"></i>
-                <span>Student Roster</span>
+                <span>Roster</span>
             </div>
             <div class="nav-item" data-page="appointments">
                 <i class="bi bi-calendar-check"></i>
@@ -548,7 +548,6 @@
                 <i class="bi bi-chat-dots"></i>
                 <span>Consultations</span>
             </div>
-            <div class="nav-item" data-page="certificate">
                 <i class="bi bi-file-earmark-medical"></i>
                 <span>Medical Certificate</span>
             </div>
@@ -561,7 +560,7 @@
 
     <main class="main-content">
         <div class="page-header">
-            <h2>Student Roster</h2>
+            <h2>Roster</h2>
             <p>Manage student information and records</p>
         </div>
 
@@ -729,7 +728,7 @@
             'appointments': 'appointments.php',
             'records': 'patient_records.php',
             'consultations': 'consultations.php',
-            'certificate': 'medical_cert.php',
+            'certificate': '',
             'profile': 'profile.php'
         };
 

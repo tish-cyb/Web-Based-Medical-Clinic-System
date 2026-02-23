@@ -1538,8 +1538,8 @@
 <script>
     /* NAV */
     const pageFiles = {
-        dashboard: 'nurse_dashboard.php',
-        roster: 'nurse_roster.php',
+        dashboard: 'medical_dashboard.php',
+        roster: 'student_roster.php',
         appointments: 'appointments.php',
         records: 'patient_records.php',
         consultations: 'consultations.php',
