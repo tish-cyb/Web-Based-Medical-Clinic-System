@@ -351,7 +351,6 @@
         <div class="nav-item" data-page="appointments"><i class="bi bi-calendar-check"></i><span>Appointments</span></div>
         <div class="nav-item active" data-page="records"><i class="bi bi-folder2-open"></i><span>Patient Records</span></div>
         <div class="nav-item" data-page="consultations"><i class="bi bi-chat-dots"></i><span>Consultations</span></div>
-        <div class="nav-item" data-page="certificate"><i class="bi bi-file-earmark-medical"></i><span>Medical Certificate</span></div>
         <div class="nav-item" data-page="profile"><i class="bi bi-person"></i><span>Profile</span></div>
     </nav>
 </div>
