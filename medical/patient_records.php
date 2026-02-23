@@ -342,7 +342,7 @@
 <!-- SIDEBAR -->
 <div class="sidebar">
     <div class="sidebar-header">
-        <h1>Nurse Portal</h1>
+        <h1>Medical Portal</h1>
         <p>Clinical Management</p>
     </div>
     <nav class="sidebar-nav">
