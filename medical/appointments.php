@@ -490,9 +490,6 @@
                 <i class="bi bi-chat-dots"></i>
                 <span>Consultations</span>
             </div>
-                <i class="bi bi-file-earmark-medical"></i>
-                <span>Medical Certificate</span>
-            </div>
             <div class="nav-item" data-page="profile">
                 <i class="bi bi-person"></i>
                 <span>Profile</span>
