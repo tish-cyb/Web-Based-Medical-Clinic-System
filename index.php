@@ -29,8 +29,7 @@ if (isset($_POST['signin'])) {
                 header("Location: student/student_dashboard.php");
                 exit();
             } elseif ($user['role'] == 'nurse') {
-                header("Location: nurse/nurse_dashboard.php");
-                exit();
+                header("Location: medical/medical_dashboard.php");                exit();
             } elseif ($user['role'] == 'admin') {
                 header("Location: admin/admin_dashboard.php");
                 exit();
