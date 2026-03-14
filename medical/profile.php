@@ -187,7 +187,14 @@
 
         .form-control:disabled {
             background-color: #f3f4f6;
-            cursor: not-allowed;
+            color: var(--text-dark);
+            cursor: default;
+        }
+
+        .form-control:not(:disabled) {
+            background-color: #ffffff;
+            border-color: #9ca3af;
+            cursor: text;
         }
 
         .form-control.error {
@@ -521,16 +528,11 @@
             </div>
             <div class="section-body">
                 <form id="profileForm">
-                    <div class="form-row">
+                    <div class="form-row two-col">
                         <div class="form-group">
                             <label class="form-label">Full Name</label>
                             <input type="text" class="form-control" id="fullName" value="Maria Garcia, RN" disabled>
                             <span class="error-message" id="fullNameError">Please enter a valid name (letters and spaces only)</span>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">License Number</label>
-                            <input type="text" class="form-control" id="licenseNumber" value="RN-123456" disabled>
-                            <span class="error-message" id="licenseNumberError">Please enter a valid license number</span>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Position</label>
@@ -640,7 +642,6 @@
         function enableEdit() {
             isEditMode = true;
             document.getElementById('fullName').disabled = false;
-            document.getElementById('licenseNumber').disabled = false;
             document.getElementById('position').disabled = false;
             document.getElementById('department').disabled = false;
             document.getElementById('emailAddress').disabled = false;
@@ -654,7 +655,6 @@
         function cancelEdit() {
             isEditMode = false;
             document.getElementById('fullName').disabled = true;
-            document.getElementById('licenseNumber').disabled = true;
             document.getElementById('position').disabled = true;
             document.getElementById('department').disabled = true;
             document.getElementById('emailAddress').disabled = true;
@@ -662,7 +662,6 @@
 
             // Reset values
             document.getElementById('fullName').value = "Maria Garcia, RN";
-            document.getElementById('licenseNumber').value = "RN-123456";
             document.getElementById('position').value = "Registered Nurse";
             document.getElementById('department').value = "PUP iTech Clinic";
             document.getElementById('emailAddress').value = "maria.garcia@pup.edu.ph";
@@ -731,16 +730,6 @@
             }
         });
 
-        document.getElementById('licenseNumber').addEventListener('input', function() {
-            if (isEditMode) {
-                if (validateLicenseNumber(this.value)) {
-                    clearError('licenseNumber', 'licenseNumberError');
-                } else {
-                    showError('licenseNumber', 'licenseNumberError');
-                }
-            }
-        });
-
         document.getElementById('position').addEventListener('input', function() {
             if (isEditMode) {
                 if (validateRequired(this.value)) {
@@ -789,7 +778,6 @@
 
             // Get values
             const fullName = document.getElementById('fullName').value;
-            const licenseNumber = document.getElementById('licenseNumber').value;
             const position = document.getElementById('position').value;
             const department = document.getElementById('department').value;
             const emailAddress = document.getElementById('emailAddress').value;
@@ -800,11 +788,6 @@
 
             if (!validateName(fullName)) {
                 showError('fullName', 'fullNameError');
-                isValid = false;
-            }
-
-            if (!validateLicenseNumber(licenseNumber)) {
-                showError('licenseNumber', 'licenseNumberError');
                 isValid = false;
             }
 
@@ -835,7 +818,6 @@
             // Save the profile data (in a real application, this would be sent to the server)
             console.log('Profile Updated:', {
                 fullName,
-                licenseNumber,
                 position,
                 department,
                 emailAddress,
