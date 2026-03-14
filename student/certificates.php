@@ -565,7 +565,6 @@
                         <th>Certificate Type</th>
                         <th>Issue Date</th>
                         <th>Valid Until</th>
-                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -574,7 +573,6 @@
                         <td>Medical Clearance</td>
                         <td>March 18, 2024</td>
                         <td>June 18, 2024</td>
-                        <td><span class="status-badge status-valid">Valid</span></td>
                         <td>
                             <button class="btn-action btn-view">View</button>
                             <button class="btn-action btn-download">Download PDF</button>
@@ -584,7 +582,6 @@
                         <td>Fitness Certificate</td>
                         <td>March 20, 2024</td>
                         <td>June 20, 2024</td>
-                        <td><span class="status-badge status-valid">Valid</span></td>
                         <td>
                             <button class="btn-action btn-view">View</button>
                             <button class="btn-action btn-download">Download PDF</button>

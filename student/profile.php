@@ -429,6 +429,18 @@
             font-family: 'Poppins', sans-serif;
             color: var(--text-dark);
             background-color: #f9fafb;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .form-group input[readonly] {
+            background-color: #f9fafb;
+            cursor: default;
+        }
+
+        .form-group input:not([readonly]) {
+            background-color: #ffffff;
+            border-color: #d1d5db;
+            cursor: text;
         }
 
         .form-group input:focus {
@@ -658,30 +670,30 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label>Full Name <span class="required-asterisk">*</span></label>
-                        <input type="text" value="Juan Dela Cruz" readonly required>
+                        <input type="text" id="fullName" value="Juan Dela Cruz" readonly required>
                     </div>
                     <div class="form-group">
                         <label>Student Number <span class="required-asterisk">*</span></label>
-                        <input type="text" value="2021-12345" readonly required>
+                        <input type="text" id="studentNumber" value="2021-12345" readonly required>
                     </div>
                     <div class="form-group">
                         <label>Program <span class="required-asterisk">*</span></label>
-                        <input type="text" value="Diploma in Information Technology" readonly required>
+                        <input type="text" id="program" value="Diploma in Information Technology" readonly required>
                     </div>
                 </div>
 
                 <div class="form-grid">
                     <div class="form-group">
                         <label>Year Level <span class="required-asterisk">*</span></label>
-                        <input type="text" value="3rd Year" readonly required>
+                        <input type="text" id="yearLevel" value="3rd Year" readonly required>
                     </div>
                     <div class="form-group">
                         <label>Email Address <span class="required-asterisk">*</span></label>
-                        <input type="email" value="maria.garcia@pup.edu.ph" readonly required>
+                        <input type="email" id="emailAddress" value="maria.garcia@pup.edu.ph" readonly required>
                     </div>
                     <div class="form-group">
                         <label>Contact Number <span class="required-asterisk">*</span></label>
-                        <input type="tel" value="+63 917 123 4567" readonly required>
+                        <input type="tel" id="contactNumber" value="+63 917 123 4567" readonly required>
                     </div>
                 </div>
 
@@ -903,22 +915,30 @@
             const emergencyPerson = document.getElementById('emergencyContactPerson');
             const emergencyRelationship = document.getElementById('emergencyContactRelationship');
             const emergencyNumber = document.getElementById('emergencyContactNumber');
+            const allFields = [
+                document.getElementById('fullName'),
+                document.getElementById('studentNumber'),
+                document.getElementById('program'),
+                document.getElementById('yearLevel'),
+                document.getElementById('emailAddress'),
+                document.getElementById('contactNumber'),
+                emergencyPerson,
+                emergencyRelationship,
+                emergencyNumber
+            ];
 
             if (isEditing) {
-                emergencyPerson.removeAttribute('readonly');
-                emergencyRelationship.removeAttribute('readonly');
-                emergencyNumber.removeAttribute('readonly');
+                allFields.forEach(f => f.removeAttribute('readonly'));
                 editBtn.innerHTML = '<i class="bi bi-check-lg"></i> Save Changes';
             } else {
-                // Validate required emergency fields before saving
-                if (!emergencyPerson.value.trim() || !emergencyRelationship.value.trim() || !emergencyNumber.value.trim()) {
-                    alert('Emergency Contact Person, Relationship, and Contact Number are required fields and cannot be left blank.');
+                // Validate all fields before saving
+                const empty = allFields.find(f => !f.value.trim());
+                if (empty) {
+                    alert('All fields are required and cannot be left blank.');
                     isEditing = true;
                     return;
                 }
-                emergencyPerson.setAttribute('readonly', true);
-                emergencyRelationship.setAttribute('readonly', true);
-                emergencyNumber.setAttribute('readonly', true);
+                allFields.forEach(f => f.setAttribute('readonly', ''));
                 editBtn.innerHTML = '<i class="bi bi-pencil"></i> Edit Profile';
             }
         });
