@@ -481,6 +481,100 @@
                 font-size: 14px;
             }
         }
+
+        /* ── Modal overlay ── */
+        .modal-overlay {
+            display: none; position: fixed; z-index: 2000;
+            inset: 0; background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(5px);
+            align-items: center; justify-content: center; padding: 20px;
+        }
+        .modal-overlay.show { display: flex; animation: mfadeIn 0.25s ease; }
+        @keyframes mfadeIn { from{opacity:0} to{opacity:1} }
+        .modal-box {
+            background: white; border-radius: 18px;
+            width: 100%; max-width: 640px; max-height: 92vh;
+            overflow: hidden; display: flex; flex-direction: column;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+            animation: mslideUp 0.3s ease;
+        }
+        @keyframes mslideUp { from{transform:translateY(40px);opacity:0} to{transform:translateY(0);opacity:1} }
+        .modal-head {
+            background: linear-gradient(90deg, #7f1d1d, #ef4444);
+            color: white; padding: 22px 28px;
+            display: flex; justify-content: space-between; align-items: center;
+            flex-shrink: 0;
+        }
+        .modal-head-title { font-size: 18px; font-weight: 700; }
+        .modal-head-sub   { font-size: 12px; opacity: 0.85; margin-top: 2px; }
+        .modal-close-btn {
+            background: rgba(255,255,255,0.2); border: none; color: white;
+            width: 32px; height: 32px; border-radius: 50%; font-size: 18px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.2s; flex-shrink: 0;
+        }
+        .modal-close-btn:hover { background: rgba(255,255,255,0.35); transform: rotate(90deg); }
+        .modal-scroll { overflow-y: auto; flex: 1; padding: 28px; background: #f3f4f6; }
+        /* PUP cert document inside modal */
+        .cert-document {
+            background: white; border-radius: 8px; padding: 32px 40px;
+            font-family: 'Times New Roman', serif;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        .cert-doc-header {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 12px; padding-bottom: 12px;
+            border-bottom: 2.5px solid #7f1d1d;
+        }
+        .cert-doc-logo {
+            width: 58px; height: 58px; background: #7f1d1d;
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; color: white; font-size: 18px;
+            font-weight: 700; flex-shrink: 0; font-family: 'Poppins', sans-serif;
+        }
+        .cert-doc-header-text { flex: 1; text-align: center; }
+        .cert-doc-header-text .rep  { font-size: 10px; color: #555; font-style: italic; }
+        .cert-doc-header-text .univ { font-size: 13px; font-weight: bold; color: #1f2937; }
+        .cert-doc-header-text .loc  { font-size: 10px; color: #555; }
+        .cert-doc-title { text-align: center; margin: 18px 0 4px; }
+        .cert-doc-title .main-t { font-size: 20px; font-weight: bold; color: #7f1d1d; letter-spacing: 1px; }
+        .cert-doc-title .sub-t  { font-size: 12px; font-weight: bold; color: #7f1d1d; letter-spacing: 3px; margin-top: 2px; }
+        .cert-doc-body { font-size: 13px; line-height: 2.4; color: #1f2937; margin-top: 16px; }
+        .cert-doc-uline {
+            display: inline-block; border-bottom: 1.5px solid #1f2937;
+            min-width: 180px; text-align: center;
+            font-weight: bold; color: #7f1d1d; padding: 0 4px;
+        }
+        .cert-doc-uline.full { display: block; width: 100%; margin: 4px 0; }
+        .cert-doc-sig { margin-top: 42px; text-align: center; }
+        .cert-doc-sig-line { border-top: 2px solid #1f2937; width: 240px; margin: 0 auto; padding-top: 6px; font-weight: bold; font-size: 13px; color: #1f2937; }
+        .cert-doc-sig-detail { font-size: 11px; color: #555; margin-top: 3px; }
+        .cert-doc-ref { font-size: 10px; color: #aaa; margin-top: 18px; text-align: right; border-top: 1px solid #e5e7eb; padding-top: 6px; }
+        /* modal footer */
+        .modal-footer-bar {
+            padding: 16px 28px; background: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+            display: flex; justify-content: flex-end; gap: 10px; flex-shrink: 0;
+        }
+        .btn-mclose {
+            padding: 10px 22px; border-radius: 8px; border: none;
+            background: #e5e7eb; color: #1f2937;
+            font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 600;
+            cursor: pointer; transition: background 0.2s;
+        }
+        .btn-mclose:hover { background: #d1d5db; }
+        .btn-mdl {
+            padding: 10px 22px; border-radius: 8px; border: none;
+            background: #7f1d1d; color: white;
+            font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s;
+            display: inline-flex; align-items: center; gap: 8px;
+        }
+        .btn-mdl:hover { background: #b91c1c; transform: translateY(-1px); }
+        .btn-mdl:disabled { background: #9ca3af; cursor: not-allowed; transform: none; }
+        .dl-spin { width: 15px; height: 15px; border: 2px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: dspin 0.7s linear infinite; display: none; }
+        @keyframes dspin { to{ transform: rotate(360deg); } }
+        .btn-action { display: inline-flex; align-items: center; gap: 5px; }
     </style>
 </head>
 <body>
@@ -565,6 +659,7 @@
                         <th>Certificate Type</th>
                         <th>Issue Date</th>
                         <th>Valid Until</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -573,30 +668,216 @@
                         <td>Medical Clearance</td>
                         <td>March 18, 2024</td>
                         <td>June 18, 2024</td>
+                        <td><span class="status-badge status-valid">Valid</span></td>
                         <td>
-                            <button class="btn-action btn-view">View</button>
-                            <button class="btn-action btn-download">Download PDF</button>
+                            <button class="btn-action btn-view" onclick="viewCert(0, this)"><i class="bi bi-eye me-1"></i>View</button>
+                            <button class="btn-action btn-download" onclick="downloadCert(0, this)"><i class="bi bi-download me-1"></i>Download PDF</button>
                         </td>
                     </tr>
                     <tr>
                         <td>Fitness Certificate</td>
                         <td>March 20, 2024</td>
                         <td>June 20, 2024</td>
+                        <td><span class="status-badge status-valid">Valid</span></td>
                         <td>
-                            <button class="btn-action btn-view">View</button>
-                            <button class="btn-action btn-download">Download PDF</button>
+                            <button class="btn-action btn-view" onclick="viewCert(1, this)"><i class="bi bi-eye me-1"></i>View</button>
+                            <button class="btn-action btn-download" onclick="downloadCert(1, this)"><i class="bi bi-download me-1"></i>Download PDF</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+
+    <!-- ── View Certificate Modal ── -->
+    <div class="modal-overlay" id="certModal">
+        <div class="modal-box">
+            <div class="modal-head">
+                <div>
+                    <div class="modal-head-title" id="modal-cert-type">Medical Clearance</div>
+                    <div class="modal-head-sub">PUP Medical Services Department</div>
+                </div>
+                <button class="modal-close-btn" onclick="closeCertModal()">&times;</button>
+            </div>
+            <div class="modal-scroll">
+                <div class="cert-document" id="cert-modal-preview"></div>
+            </div>
+            <div class="modal-footer-bar">
+                <button class="btn-mclose" onclick="closeCertModal()"><i class="bi bi-x-circle me-1"></i> Close</button>
+                <button class="btn-mdl" id="modal-dl-btn" onclick="downloadCurrentCert(this)">
+                    <div class="dl-spin" id="modal-dl-spin"></div>
+                    <i class="bi bi-download" id="modal-dl-icon"></i> Download PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden render target for PDF -->
+    <div id="pdf-render" style="position:fixed;left:-9999px;top:0;width:680px;background:white;padding:44px 52px;font-family:'Times New Roman',serif;z-index:-1;"></div>
+
     </main>
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <script>
-        // Navigation functionality
+
+        // ── Certificate data ──
+        const certData = [
+            {
+                type: 'Medical Clearance',
+                filename: 'Medical_Clearance',
+                date: 'March 18, 2024',
+                name: 'DELA CRUZ, JUAN PEDRO M.',
+                purpose: 'Off-campus OJT / Immersion Activity (AY 2023-2024, 2nd Semester)',
+                physician: 'FELICITAS A. BERMUDEZ',
+                license: '0115224'
+            },
+            {
+                type: 'Fitness Certificate',
+                filename: 'Fitness_Certificate',
+                date: 'March 20, 2024',
+                name: 'DELA CRUZ, JUAN PEDRO M.',
+                purpose: 'Sports Event / Intramurals Participation',
+                physician: 'FELICITAS A. BERMUDEZ',
+                license: '0115224'
+            }
+        ];
+        let currentCertIdx = 0;
+
+        function buildCertPreviewHTML(c) {
+            return `
+            <div class="cert-doc-header">
+                <div class="cert-doc-logo">PUP</div>
+                <div class="cert-doc-header-text">
+                    <div class="rep">Republic of the Philippines</div>
+                    <div class="univ">POLYTECHNIC UNIVERSITY OF THE PHILIPPINES</div>
+                    <div class="loc">Manila</div>
+                </div>
+            </div>
+            <div class="cert-doc-title">
+                <div class="main-t">Medical CLEARANCE</div>
+                <div class="sub-t">PHYSICALLY FIT</div>
+            </div>
+            <div class="cert-doc-body">
+                <p>Date &nbsp;<span class="cert-doc-uline" style="min-width:180px;">${c.date}</span></p>
+                <br>
+                <p>To Whom It May Concern:</p>
+                <br>
+                <p>This is to certify that</p>
+                <div class="cert-doc-uline full">${c.name}</div>
+                <p>has been examined by the undersigned and found to be <strong>physically fit</strong> at the time of examination.</p>
+                <br>
+                <p>This certification is issued upon his/her request for</p>
+                <div class="cert-doc-uline full">${c.purpose}</div>
+                <div class="cert-doc-uline full" style="min-height:22px;">&nbsp;</div>
+                <p>purpose but not for medico-legal reason.</p>
+            </div>
+            <div class="cert-doc-sig">
+                <div class="cert-doc-sig-line">${c.physician}, M.D.</div>
+                <div class="cert-doc-sig-detail">Lic No. ${c.license}</div>
+            </div>
+            <div class="cert-doc-ref">Medical 03 · Rev 1 · PUP-LAFO-6-MEDS · Medical Services Department</div>`;
+        }
+
+        function buildCertPDFHTML(c) {
+            return `<div style="font-family:'Times New Roman',serif;background:white;padding:0;color:#1f2937;">
+                <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px;padding-bottom:12px;border-bottom:2.5px solid #7f1d1d;">
+                    <div style="width:60px;height:60px;background:#7f1d1d;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:18px;font-weight:700;flex-shrink:0;font-family:Arial,sans-serif;">PUP</div>
+                    <div style="flex:1;text-align:center;">
+                        <div style="font-size:10px;color:#555;font-style:italic;">Republic of the Philippines</div>
+                        <div style="font-size:13px;font-weight:bold;color:#1f2937;">POLYTECHNIC UNIVERSITY OF THE PHILIPPINES</div>
+                        <div style="font-size:10px;color:#555;">Manila</div>
+                    </div>
+                </div>
+                <div style="text-align:center;margin:18px 0 4px;">
+                    <div style="font-size:22px;font-weight:bold;color:#7f1d1d;letter-spacing:1px;">Medical CLEARANCE</div>
+                    <div style="font-size:12px;font-weight:bold;color:#7f1d1d;letter-spacing:3px;margin-top:3px;">PHYSICALLY FIT</div>
+                </div>
+                <div style="font-size:13px;line-height:2.4;color:#1f2937;margin-top:18px;">
+                    <p>Date &nbsp;<span style="display:inline-block;border-bottom:1.5px solid #1f2937;min-width:180px;text-align:center;font-weight:bold;color:#7f1d1d;padding:0 4px;">${c.date}</span></p>
+                    <br><p>To Whom It May Concern:</p><br>
+                    <p>This is to certify that</p>
+                    <div style="display:block;width:100%;border-bottom:1.5px solid #1f2937;text-align:center;font-weight:bold;color:#7f1d1d;padding:2px 4px;margin:6px 0;">${c.name}</div>
+                    <p>has been examined by the undersigned and found to be <strong>physically fit</strong> at the time of examination.</p>
+                    <br><p>This certification is issued upon his/her request for</p>
+                    <div style="display:block;width:100%;border-bottom:1.5px solid #1f2937;text-align:center;font-weight:bold;color:#7f1d1d;padding:2px 4px;margin:6px 0;">${c.purpose}</div>
+                    <div style="display:block;width:100%;border-bottom:1.5px solid #1f2937;min-height:22px;margin:0 0 4px;">&nbsp;</div>
+                    <p>purpose but not for medico-legal reason.</p>
+                </div>
+                <div style="margin-top:50px;text-align:center;">
+                    <div style="border-top:2px solid #1f2937;width:240px;margin:0 auto;padding-top:7px;font-weight:bold;font-size:13px;color:#1f2937;">${c.physician}, M.D.</div>
+                    <div style="font-size:11px;color:#555;margin-top:3px;">Lic No. ${c.license}</div>
+                </div>
+                <div style="font-size:10px;color:#aaa;margin-top:22px;text-align:right;border-top:1px solid #e5e7eb;padding-top:6px;">Medical 03 · Rev 1 · PUP-LAFO-6-MEDS · Medical Services Department</div>
+            </div>`;
+        }
+
+        function viewCert(idx) {
+            currentCertIdx = idx;
+            const c = certData[idx];
+            document.getElementById('modal-cert-type').textContent = c.type;
+            document.getElementById('cert-modal-preview').innerHTML = buildCertPreviewHTML(c);
+            document.getElementById('certModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCertModal() {
+            document.getElementById('certModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('certModal').addEventListener('click', function(e) {
+                if (e.target === this) closeCertModal();
+            });
+        });
+
+        async function runPDFDownload(idx, spinEl, iconEl, btn) {
+            const c = certData[idx];
+            btn.disabled = true;
+            spinEl.style.display = 'block';
+            iconEl.style.display = 'none';
+            try {
+                const target = document.getElementById('pdf-render');
+                target.innerHTML = buildCertPDFHTML(c);
+                await new Promise(r => setTimeout(r, 320));
+                const canvas = await html2canvas(target, { scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false });
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+                const pw = pdf.internal.pageSize.getWidth();
+                const m  = 14;
+                const iw = pw - m * 2;
+                const ih = (canvas.height * iw) / canvas.width;
+                pdf.addImage(canvas.toDataURL('image/jpeg', 0.96), 'JPEG', m, m, iw, Math.min(ih, pdf.internal.pageSize.getHeight() - m * 2));
+                pdf.save(c.filename + '.pdf');
+            } catch(err) {
+                alert('PDF generation failed. Please try again.');
+                console.error(err);
+            } finally {
+                btn.disabled = false;
+                spinEl.style.display = 'none';
+                iconEl.style.display = '';
+                document.getElementById('pdf-render').innerHTML = '';
+            }
+        }
+
+        function downloadCert(idx, btn) {
+            const spin = btn.querySelector('.dl-spin') || document.createElement('div');
+            const icon = btn.querySelector('i');
+            runPDFDownload(idx, spin, icon, btn);
+        }
+
+        function downloadCurrentCert(btn) {
+            runPDFDownload(currentCertIdx,
+                document.getElementById('modal-dl-spin'),
+                document.getElementById('modal-dl-icon'),
+                btn);
+        }
+
+        // ── Navigation ──
+
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', function() {
                 document.querySelectorAll('.nav-item').forEach(nav => {
