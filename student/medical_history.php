@@ -349,7 +349,6 @@
                 <tbody>
                     <tr>
                         <td>Mar. 20, 2024</td>
-                        <td>Nurse Garcia</td>
                         <td>Consultation</td>
                         <td>Common Cold</td>
                         <td><span class="status-badge status-completed">Completed</span></td>
@@ -368,7 +367,6 @@
                     </tr>
                     <tr>
                         <td>Apr. 2, 2025</td>
-                        <td>Nurse Cruz</td>
                         <td>General Checkup</td>
                         <td>Normal</td>
                         <td><span class="status-badge status-completed">Completed</span></td>
