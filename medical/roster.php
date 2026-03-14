@@ -721,7 +721,7 @@
         // Navigation functionality
         const pageFiles = {
             'dashboard': 'medical_dashboard.php',
-            'roster': 'student_roster.php',
+            'roster': 'roster.php',
             'appointments': 'appointments.php',
             'records': 'patient_records.php',
             'consultations': 'consultations.php',

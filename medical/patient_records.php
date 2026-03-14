@@ -839,7 +839,7 @@ let currentEditRecord = null;
 let currentTab = 'students';
 
 // ===================== NAVIGATION =====================
-const pageFiles = { dashboard:'medical_dashboard.php', roster:'student_roster.php', appointments:'appointments.php', records:'patient_records.php', consultations:'consultations.php', certificate:'', profile:'profile.php' };
+const pageFiles = { dashboard:'medical_dashboard.php', roster:'roster.php', appointments:'appointments.php', records:'patient_records.php', consultations:'consultations.php', certificate:'', profile:'profile.php' };
 document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', function() {
         const f = pageFiles[this.getAttribute('data-page')];
