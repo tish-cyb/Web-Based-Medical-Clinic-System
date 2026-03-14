@@ -323,15 +323,15 @@
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-number">18</div>
+                <div class="stat-label">Pending Appointments</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">105</div>
                 <div class="stat-label">Monthly Appointments</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number">1,247</div>
-                <div class="stat-label">Total Students</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">42</div>
-                <div class="stat-label">Pending Records</div>
+                <div class="stat-label">Annual Appointments</div>
             </div>
         </div>
 
@@ -347,7 +347,6 @@
                         <th>Student Number</th>
                         <th>Purpose</th>
                         <th>Status</th>
-                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -357,7 +356,6 @@
                         <td>2023-12345-MN-0</td>
                         <td>Medical Clearance</td>
                         <td><span class="status-badge status-confirmed">Confirmed</span></td>
-                        <td><button class="btn-action btn-start">Start Consultation</button></td>
                     </tr>
                     <tr>
                         <td>10:00 AM</td>
@@ -365,7 +363,6 @@
                         <td>2023-56789-MN-0</td>
                         <td>General Consultation</td>
                         <td><span class="status-badge status-waiting">Waiting</span></td>
-                        <td><button class="btn-action btn-details">View Details</button></td>
                     </tr>
                     <tr>
                         <td>10:30 AM</td>
@@ -373,7 +370,6 @@
                         <td>2023-76543-MN-0</td>
                         <td>General Consultation</td>
                         <td><span class="status-badge status-waiting">Waiting</span></td>
-                        <td><button class="btn-action btn-details">View Details</button></td>
                     </tr>
                     <tr>
                         <td>11:30 AM</td>
@@ -381,7 +377,6 @@
                         <td>2023-11123-MN-0</td>
                         <td>General Consultation</td>
                         <td><span class="status-badge status-waiting">Waiting</span></td>
-                        <td><button class="btn-action btn-details">View Details</button></td>
                     </tr>
                 </tbody>
             </table>
