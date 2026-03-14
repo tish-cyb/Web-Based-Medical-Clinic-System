@@ -519,7 +519,7 @@
         }
 
         .form-group input.required-field {
-            border-color: #fca5a5;
+            border-color: #e5e7eb;
             background-color: #fff;
         }
 
@@ -530,7 +530,7 @@
 
         .form-group select {
             padding: 12px 16px;
-            border: 1px solid #fca5a5;
+            border: 1px solid #e5e7eb;
             border-radius: 8px;
             font-size: 14px;
             font-family: 'Poppins', sans-serif;
@@ -657,31 +657,31 @@
             <div class="section-content">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" value="Juan Dela Cruz" readonly>
+                        <label>Full Name <span class="required-asterisk">*</span></label>
+                        <input type="text" value="Juan Dela Cruz" readonly required>
                     </div>
                     <div class="form-group">
-                        <label>Student Number</label>
-                        <input type="text" value="2021-12345" readonly>
+                        <label>Student Number <span class="required-asterisk">*</span></label>
+                        <input type="text" value="2021-12345" readonly required>
                     </div>
                     <div class="form-group">
-                        <label>Program</label>
-                        <input type="text" value="Diploma in Information Technology" readonly>
+                        <label>Program <span class="required-asterisk">*</span></label>
+                        <input type="text" value="Diploma in Information Technology" readonly required>
                     </div>
                 </div>
 
                 <div class="form-grid">
                     <div class="form-group">
-                        <label>Year Level</label>
-                        <input type="text" value="3rd Year" readonly>
+                        <label>Year Level <span class="required-asterisk">*</span></label>
+                        <input type="text" value="3rd Year" readonly required>
                     </div>
                     <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="email" value="maria.garcia@pup.edu.ph" readonly>
+                        <label>Email Address <span class="required-asterisk">*</span></label>
+                        <input type="email" value="maria.garcia@pup.edu.ph" readonly required>
                     </div>
                     <div class="form-group">
-                        <label>Contact Number</label>
-                        <input type="tel" value="+63 917 123 4567" readonly>
+                        <label>Contact Number <span class="required-asterisk">*</span></label>
+                        <input type="tel" value="+63 917 123 4567" readonly required>
                     </div>
                 </div>
 
@@ -709,20 +709,15 @@
                             Relationship to Student
                             <span class="required-asterisk">*</span>
                         </label>
-                        <select
+                        <input
+                            type="text"
                             id="emergencyContactRelationship"
+                            class="required-field"
+                            value="Parent"
+                            placeholder="e.g. Parent, Sibling, Guardian"
+                            readonly
                             required
-                            disabled
                         >
-                            <option value="">-- Select Relationship --</option>
-                            <option value="parent" selected>Parent</option>
-                            <option value="sibling">Sibling</option>
-                            <option value="spouse">Spouse</option>
-                            <option value="guardian">Guardian</option>
-                            <option value="relative">Relative</option>
-                            <option value="friend">Friend</option>
-                            <option value="other">Other</option>
-                        </select>
                     </div>
                     <div class="form-group">
                         <label>
@@ -911,18 +906,18 @@
 
             if (isEditing) {
                 emergencyPerson.removeAttribute('readonly');
-                emergencyRelationship.removeAttribute('disabled');
+                emergencyRelationship.removeAttribute('readonly');
                 emergencyNumber.removeAttribute('readonly');
                 editBtn.innerHTML = '<i class="bi bi-check-lg"></i> Save Changes';
             } else {
                 // Validate required emergency fields before saving
-                if (!emergencyPerson.value.trim() || !emergencyRelationship.value || !emergencyNumber.value.trim()) {
+                if (!emergencyPerson.value.trim() || !emergencyRelationship.value.trim() || !emergencyNumber.value.trim()) {
                     alert('Emergency Contact Person, Relationship, and Contact Number are required fields and cannot be left blank.');
                     isEditing = true;
                     return;
                 }
                 emergencyPerson.setAttribute('readonly', true);
-                emergencyRelationship.setAttribute('disabled', true);
+                emergencyRelationship.setAttribute('readonly', true);
                 emergencyNumber.setAttribute('readonly', true);
                 editBtn.innerHTML = '<i class="bi bi-pencil"></i> Edit Profile';
             }

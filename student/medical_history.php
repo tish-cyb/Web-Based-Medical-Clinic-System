@@ -340,7 +340,6 @@
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Healthcare Provider</th>
                         <th>Type</th>
                         <th>Diagnosis</th>
                         <th>Status</th>
@@ -351,7 +350,7 @@
                     <tr>
                         <td>Mar. 20, 2024</td>
                         <td>Nurse Garcia</td>
-                        <td>General Consultation</td>
+                        <td>Consultation</td>
                         <td>Common Cold</td>
                         <td><span class="status-badge status-completed">Completed</span></td>
                         <td>
@@ -360,7 +359,6 @@
                     </tr>
                     <tr>
                         <td>May 20, 2025</td>
-                        <td>Dr. Santos</td>
                         <td>Medical Clearance</td>
                         <td>Fit for Activities</td>
                         <td><span class="status-badge status-completed">Completed</span></td>
@@ -371,7 +369,7 @@
                     <tr>
                         <td>Apr. 2, 2025</td>
                         <td>Nurse Cruz</td>
-                        <td>Follow-up</td>
+                        <td>General Checkup</td>
                         <td>Normal</td>
                         <td><span class="status-badge status-completed">Completed</span></td>
                         <td>
