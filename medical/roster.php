@@ -124,6 +124,42 @@
             font-weight: 400;
         }
 
+        /* TAB SWITCHER */
+        .tab-switcher {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            padding: 6px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            margin-bottom: 24px;
+            width: fit-content;
+            gap: 4px;
+        }
+        .tab-btn {
+            padding: 10px 28px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            color: var(--text-gray);
+            background: transparent;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .tab-btn i { font-size: 16px; }
+        .tab-btn.active {
+            background: linear-gradient(90deg, var(--primary-gradient-start), var(--primary-gradient-end));
+            color: white;
+            box-shadow: 0 4px 12px rgba(127,29,29,0.3);
+        }
+        .tab-btn:not(.active):hover { background: var(--primary-soft); color: var(--primary-color); }
+
+        /* TAB PANEL */
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
         .filter-section {
             background: white;
             padding: 25px 30px;
@@ -561,64 +597,133 @@
             <p>Manage student information and records</p>
         </div>
 
-        <div class="filter-section">
-            <div class="filter-row">
-                <input 
-                    type="text" 
-                    class="search-input" 
-                    id="searchInput"
-                    placeholder="Search by name or student number">
-                
-                <select class="filter-select" id="yearFilter">
-                    <option value="">All Year Levels</option>
-                    <option value="1st">1st Year</option>
-                    <option value="2nd">2nd Year</option>
-                    <option value="3rd">3rd Year</option>
-                    <option value="4th">4th Year</option>
-                </select>
-                
-                <select class="filter-select" id="genderFilter">
-                    <option value="">All Genders</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
-                
-                <select class="filter-select" id="courseFilter">
-                    <option value="">All Courses</option>
-                    <option value="DIT">DIT</option>
-                    <option value="DOMT">DOMT</option>
-                    <option value="BSIT">BSIT</option>
-                    <option value="BSCS">BSCS</option>
-                </select>
-                
-                <button class="btn-search" id="searchBtn">Search</button>
+        <!-- TAB SWITCHER -->
+        <div class="tab-switcher">
+            <button class="tab-btn active" onclick="switchTab('students')" id="tab-students">
+                <i class="bi bi-mortarboard"></i> Students
+            </button>
+            <button class="tab-btn" onclick="switchTab('faculty')" id="tab-faculty">
+                <i class="bi bi-person-badge"></i> Faculty / Non-Teaching Staff
+            </button>
+        </div>
+
+        <!-- STUDENTS PANEL -->
+        <div class="tab-panel active" id="panel-students">
+            <div class="filter-section">
+                <div class="filter-row">
+                    <input 
+                        type="text" 
+                        class="search-input" 
+                        id="searchInput"
+                        placeholder="Search by name or student number">
+                    
+                    <select class="filter-select" id="yearFilter">
+                        <option value="">All Year Levels</option>
+                        <option value="1st">1st Year</option>
+                        <option value="2nd">2nd Year</option>
+                        <option value="3rd">3rd Year</option>
+                        <option value="4th">4th Year</option>
+                    </select>
+                    
+                    <select class="filter-select" id="genderFilter">
+                        <option value="">All Genders</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                    
+                    <select class="filter-select" id="courseFilter">
+                        <option value="">All Courses</option>
+                        <option value="DIT">DIT</option>
+                        <option value="DOMT">DOMT</option>
+                        <option value="BSIT">BSIT</option>
+                        <option value="BSCS">BSCS</option>
+                    </select>
+                    
+                    <button class="btn-search" id="searchBtn">Search</button>
+                </div>
+            </div>
+
+            <div class="student-list-section">
+                <div class="student-list-header">
+                    Student List
+                </div>
+                <div class="results-count" id="resultsCount">
+                    Showing <span id="resultNumber">12</span> students
+                </div>
+                <div id="tableContainer">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Student No.</th>
+                                <th>Name</th>
+                                <th>Program</th>
+                                <th>Year</th>
+                                <th>Gender</th>
+                                <th>Last Visit</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentTableBody">
+                            <!-- Students will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <div class="student-list-section">
-            <div class="student-list-header">
-                Student List
+        <!-- FACULTY PANEL -->
+        <div class="tab-panel" id="panel-faculty">
+            <div class="filter-section">
+                <div class="filter-row">
+                    <input 
+                        type="text" 
+                        class="search-input" 
+                        id="searchFacultyInput"
+                        placeholder="Search by name or employee number">
+                    
+                    <select class="filter-select" id="deptFilter">
+                        <option value="">All Departments</option>
+                        <option value="IT">IT</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Nursing">Nursing</option>
+                        <option value="Education">Education</option>
+                    </select>
+
+                    <select class="filter-select" id="facultyTypeFilter">
+                        <option value="">All Types</option>
+                        <option value="Faculty">Faculty</option>
+                        <option value="Non-Teaching">Non-Teaching</option>
+                    </select>
+                    
+                    <button class="btn-search" id="searchFacultyBtn">Search</button>
+                </div>
             </div>
-            <div class="results-count" id="resultsCount">
-                Showing <span id="resultNumber">12</span> students
-            </div>
-            <div id="tableContainer">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Student No.</th>
-                            <th>Name</th>
-                            <th>Program</th>
-                            <th>Year</th>
-                            <th>Gender</th>
-                            <th>Last Visit</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="studentTableBody">
-                        <!-- Students will be populated here -->
-                    </tbody>
-                </table>
+
+            <div class="student-list-section">
+                <div class="student-list-header">
+                    Faculty / Non-Teaching Staff List
+                </div>
+                <div class="results-count" id="facultyResultsCount">
+                    Showing <span id="facultyResultNumber">6</span> staff members
+                </div>
+                <div id="facultyTableContainer">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Employee No.</th>
+                                <th>Name</th>
+                                <th>Department</th>
+                                <th>Type</th>
+                                <th>Gender</th>
+                                <th>Last Visit</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="facultyTableBody">
+                            <!-- Faculty will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </main>
@@ -641,6 +746,31 @@
                         Medical History
                     </div>
                     <div id="recordsList">
+                        <!-- Records will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Faculty Records Modal -->
+    <div id="facultyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Staff Medical Records</h3>
+                <button class="modal-close" onclick="closeFacultyModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="student-info" id="facultyInfo">
+                    <!-- Faculty info will be populated here -->
+                </div>
+                
+                <div class="records-section">
+                    <div class="section-title">
+                        <i class="bi bi-clock-history"></i>
+                        Medical History
+                    </div>
+                    <div id="facultyRecordsList">
                         <!-- Records will be populated here -->
                     </div>
                 </div>
@@ -903,11 +1033,113 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeModal();
+                closeFacultyModal();
             }
+        });
+
+        // ===================== TAB SWITCHER =====================
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById('tab-' + tab).classList.add('active');
+            document.getElementById('panel-' + tab).classList.add('active');
+        }
+
+        // ===================== FACULTY DATA =====================
+        const facultyStaff = [
+            { id: 1, employeeNo: 'EMP-2019-001', name: 'Dr. Angela Reyes', dept: 'Nursing', type: 'Faculty', gender: 'Female', lastVisit: 'Feb. 10, 2026', records: [{ date: 'Feb. 10, 2026', type: 'Annual Check-up', complaint: 'Routine', diagnosis: 'Fit for Work', treatment: 'None', notes: 'Annual physical exam' }] },
+            { id: 2, employeeNo: 'EMP-2020-014', name: 'Mr. Robert Tan', dept: 'IT', type: 'Faculty', gender: 'Male', lastVisit: 'Jan. 22, 2026', records: [{ date: 'Jan. 22, 2026', type: 'General Consultation', complaint: 'Hypertension follow-up', diagnosis: 'Controlled Hypertension', treatment: 'Maintenance meds', notes: 'Continue medication' }] },
+            { id: 3, employeeNo: 'EMP-2018-007', name: 'Ms. Carla Bautista', dept: 'Admin', type: 'Non-Teaching', gender: 'Female', lastVisit: 'Mar. 5, 2026', records: [{ date: 'Mar. 5, 2026', type: 'Medical Clearance', complaint: 'None', diagnosis: 'Fit for Work', treatment: 'None', notes: 'Clearance for promotion' }] },
+            { id: 4, employeeNo: 'EMP-2021-022', name: 'Mr. Jose Villanueva', dept: 'Education', type: 'Faculty', gender: 'Male', lastVisit: 'Dec. 18, 2025', records: [{ date: 'Dec. 18, 2025', type: 'General Consultation', complaint: 'Back Pain', diagnosis: 'Lumbar Strain', treatment: 'Pain reliever, rest', notes: 'Ergonomic advice given' }] },
+            { id: 5, employeeNo: 'EMP-2022-031', name: 'Ms. Liza Ocampo', dept: 'Admin', type: 'Non-Teaching', gender: 'Female', lastVisit: 'Nov. 30, 2025', records: [{ date: 'Nov. 30, 2025', type: 'General Consultation', complaint: 'Migraine', diagnosis: 'Migraine', treatment: 'Pain reliever', notes: 'Rest in dark room' }] },
+            { id: 6, employeeNo: 'EMP-2017-003', name: 'Dr. Marco Santos', dept: 'Nursing', type: 'Faculty', gender: 'Male', lastVisit: 'Jan. 8, 2026', records: [{ date: 'Jan. 8, 2026', type: 'Annual Check-up', complaint: 'Routine', diagnosis: 'Fit for Work', treatment: 'None', notes: 'Annual physical exam' }] }
+        ];
+
+        let filteredFaculty = [...facultyStaff];
+
+        function renderFaculty(list) {
+            const tbody = document.getElementById('facultyTableBody');
+            const resultNumber = document.getElementById('facultyResultNumber');
+            if (list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="no-results"><i class="bi bi-search" style="font-size:48px;opacity:0.3;display:block;margin-bottom:15px;"></i>No staff found matching your search criteria.</td></tr>`;
+                resultNumber.textContent = '0';
+                return;
+            }
+            tbody.innerHTML = list.map(s => `
+                <tr>
+                    <td>${s.employeeNo}</td>
+                    <td>${s.name}</td>
+                    <td>${s.dept}</td>
+                    <td>${s.type}</td>
+                    <td>${s.gender}</td>
+                    <td>${s.lastVisit}</td>
+                    <td><button class="btn-view-records" onclick="viewFacultyRecords(${s.id})">View Records</button></td>
+                </tr>
+            `).join('');
+            resultNumber.textContent = list.length;
+        }
+
+        function filterFaculty() {
+            const search = document.getElementById('searchFacultyInput').value.toLowerCase();
+            const dept = document.getElementById('deptFilter').value;
+            const type = document.getElementById('facultyTypeFilter').value;
+            filteredFaculty = facultyStaff.filter(s => {
+                const matchSearch = s.name.toLowerCase().includes(search) || s.employeeNo.toLowerCase().includes(search);
+                const matchDept = !dept || s.dept === dept;
+                const matchType = !type || s.type === type;
+                return matchSearch && matchDept && matchType;
+            });
+            renderFaculty(filteredFaculty);
+        }
+
+        document.getElementById('searchFacultyBtn').addEventListener('click', filterFaculty);
+        document.getElementById('searchFacultyInput').addEventListener('keyup', e => { if (e.key === 'Enter') filterFaculty(); });
+        document.getElementById('deptFilter').addEventListener('change', filterFaculty);
+        document.getElementById('facultyTypeFilter').addEventListener('change', filterFaculty);
+
+        function viewFacultyRecords(id) {
+            const staff = facultyStaff.find(s => s.id === id);
+            if (!staff) return;
+            document.getElementById('facultyInfo').innerHTML = `
+                <div class="info-item"><span class="info-label">Employee Number</span><span class="info-value">${staff.employeeNo}</span></div>
+                <div class="info-item"><span class="info-label">Full Name</span><span class="info-value">${staff.name}</span></div>
+                <div class="info-item"><span class="info-label">Department</span><span class="info-value">${staff.dept}</span></div>
+                <div class="info-item"><span class="info-label">Type</span><span class="info-value">${staff.type}</span></div>
+                <div class="info-item"><span class="info-label">Gender</span><span class="info-value">${staff.gender}</span></div>
+                <div class="info-item"><span class="info-label">Last Visit</span><span class="info-value">${staff.lastVisit}</span></div>
+            `;
+            const list = document.getElementById('facultyRecordsList');
+            list.innerHTML = staff.records && staff.records.length > 0
+                ? staff.records.map(r => `
+                    <div class="record-card">
+                        <div class="record-header">
+                            <span class="record-date"><i class="bi bi-calendar3"></i> ${r.date}</span>
+                            <span class="record-type">${r.type}</span>
+                        </div>
+                        <div class="record-details">
+                            <div class="record-detail"><strong>Complaint:</strong> ${r.complaint}</div>
+                            <div class="record-detail"><strong>Diagnosis:</strong> ${r.diagnosis}</div>
+                            <div class="record-detail"><strong>Treatment:</strong> ${r.treatment}</div>
+                            <div class="record-detail"><strong>Notes:</strong> ${r.notes}</div>
+                        </div>
+                    </div>`).join('')
+                : `<div class="no-records"><i class="bi bi-inbox"></i><p>No medical records found.</p></div>`;
+            document.getElementById('facultyModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeFacultyModal() {
+            document.getElementById('facultyModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.getElementById('facultyModal').addEventListener('click', function(e) {
+            if (e.target === this) closeFacultyModal();
         });
 
         // Initial render
         renderStudents(students);
+        renderFaculty(facultyStaff);
     </script>
 </body>
 </html>
