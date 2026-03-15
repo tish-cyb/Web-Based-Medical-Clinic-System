@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_appointment'])
     else {
         $t = strtotime($appointment_time);
         if ($t < strtotime('08:00') || $t > strtotime('17:00'))
-            $field_errors['appointment_time'] = "Please choose a time between 8:00 AM and 5:00 PM.";
+            $field_errors['appointment_time'] = "Please choose a time between 8:00 AM and 9:00 PM.";
     }
 
     if (empty($reason_for_visit))
@@ -733,7 +733,7 @@ function fclass(string $key, array $errs): string {
                                class="<?= fclass('appointment_time', $field_errors) ?>">
                         <?= ferr('appointment_time', $field_errors) ?>
                         <span style="font-size:11px;color:var(--text-gray);margin-top:4px;">
-                            <i class="bi bi-clock"></i> Clinic hours: 8:00 AM – 5:00 PM, Mon–Fri
+                            <i class="bi bi-clock"></i> Clinic hours: 8:00 AM – 9:00 PM, Mon–Fri
                         </span>
                     </div>
                 </div>
@@ -1013,7 +1013,7 @@ function validateField(id) {
         case 'appointment_time':
             if (!val) { showError(id, 'Preferred time is required.'); return false; }
             if (val < '08:00' || val > '17:00') {
-                showError(id, 'Please choose a time between 8:00 AM and 5:00 PM.'); return false;
+                showError(id, 'Please choose a time between 8:00 AM and 9:00 PM.'); return false;
             }
             break;
         case 'reason_for_visit':
@@ -1238,7 +1238,7 @@ function getBotResponse(message) {
     if (m.includes('category') || m.includes('type'))
         return "We offer 5 categories: <strong>General Consultation, First Aid/Injury Care, Medical Clearance, Follow-Up Checkup,</strong> and <strong>Health Counseling</strong>. Select one from the dropdown.";
     if (m.includes('time') || m.includes('slot'))
-        return "Clinic hours are <strong>8:00 AM – 5:00 PM, Monday to Friday</strong>. Use the time field to pick your preferred slot.";
+        return "Clinic hours are <strong>8:00 AM – 9:00 PM, Monday to Friday</strong>. Use the time field to pick your preferred slot.";
     if (m.includes('requirement') || m.includes('document') || m.includes('need'))
         return "You'll need your <strong>employee number, a valid email, contact number</strong>, and a clear reason for your visit. All marked fields are required.";
     if (m.includes('cancel') || m.includes('reschedule'))
