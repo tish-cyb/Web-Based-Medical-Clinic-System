@@ -1,13 +1,10 @@
 <?php
 // ============================================================
 //  certificates.php — Student Portal
-//  Pulls Medical Clearances + Medical Certificates from DB
-//  for the logged-in student via vw_student_certificates.
 // ============================================================
 session_start();
-require_once "../config/db.php";   // provides $c (mysqli connection)
+require_once "../config/db.php";
 
-// ── GUARD ────────────────────────────────────────────────────
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {
     header("Location: ../index.php");
     exit();
@@ -15,7 +12,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {
 
 $student_id = (int) $_SESSION['profile_id'];
 
-// ── STUDENT PROFILE (for cert document name field) ───────────
 $q = mysqli_prepare($c,
     "SELECT UPPER(CONCAT(last_name, ', ', first_name,
              IF(middle_name IS NOT NULL AND middle_name <> '',
@@ -26,9 +22,6 @@ mysqli_stmt_bind_param($q, "i", $student_id);
 mysqli_stmt_execute($q);
 $profile = mysqli_fetch_assoc(mysqli_stmt_get_result($q)) ?? [];
 
-// ── CERTIFICATES via view ────────────────────────────────────
-//    Returns both medical_clearances AND medical_certificates
-//    unified into a single result set.
 $q2 = mysqli_prepare($c,
     "SELECT v.cert_id, v.certificate_type, v.issue_date,
             v.valid_until, v.purpose, v.status_detail,
@@ -53,7 +46,6 @@ while ($row = mysqli_fetch_assoc($cert_result)) {
     $certs[] = $row;
 }
 
-// ── HELPERS ──────────────────────────────────────────────────
 function fmt_date(?string $d): string {
     if (!$d) return '—';
     return date('F j, Y', strtotime($d));
@@ -62,10 +54,8 @@ function esc(?string $s): string {
     return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8');
 }
 
-// Determine display status label + badge colour from source_table + status_detail
 function cert_status(string $source, string $detail): array {
     if ($source === 'medical_clearances') {
-        // fit_status values: 'Physically Fit' | 'Fit with Conditions' | 'Unfit'
         $map = [
             'Physically Fit'      => ['Valid',           'status-valid'],
             'Fit with Conditions' => ['With Conditions', 'status-conditional'],
@@ -73,7 +63,6 @@ function cert_status(string $source, string $detail): array {
         ];
         return $map[$detail] ?? ['Valid', 'status-valid'];
     }
-    // medical_certificates status: 'Active' | 'Expired' | 'Revoked'
     $map = [
         'Active'  => ['Active',  'status-valid'],
         'Expired' => ['Expired', 'status-expired'],
@@ -82,7 +71,6 @@ function cert_status(string $source, string $detail): array {
     return $map[$detail] ?? ['Active', 'status-valid'];
 }
 
-// Build a safe filename slug
 function cert_filename(string $type): string {
     return preg_replace('/[^A-Za-z0-9_\-]/', '_', str_replace(' ', '_', $type));
 }
@@ -91,7 +79,6 @@ $display_name   = $profile['display_name']   ?? 'STUDENT';
 $student_number = $profile['student_number'] ?? '—';
 $total          = count($certs);
 
-// Encode for JS — only the fields the JS needs
 $js_certs = [];
 foreach ($certs as $cert) {
     [$statusLabel] = cert_status($cert['source_table'], $cert['status_detail'] ?? '');
@@ -273,18 +260,20 @@ $js_certs_json = json_encode($js_certs, JSON_HEX_TAG | JSON_HEX_AMP);
         .type-badge { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 13px; }
         .type-badge i { font-size: 15px; }
 
-        /* Action buttons */
-        .btn-action {
-            padding: 7px 16px; border-radius: 6px; font-size: 12px; font-weight: 600;
-            border: none; cursor: pointer; transition: all .25s; margin-right: 6px;
-            display: inline-flex; align-items: center; gap: 5px;
+        /* ── Single "View Details" action button — matches medical_history style ── */
+        .btn-view-details {
+            background: var(--primary);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: background .25s;
             font-family: 'Poppins', sans-serif;
         }
-        .btn-view     { background: white; color: var(--primary); border: 2px solid var(--primary); }
-        .btn-view:hover { background: var(--primary-soft); }
-        .btn-download { background: var(--primary); color: white; }
-        .btn-download:hover { background: var(--primary-light); }
-        .btn-download:disabled { background: #9ca3af; cursor: not-allowed; }
+        .btn-view-details:hover { background: var(--primary-light); }
 
         /* ── Modal ── */
         .modal-overlay {
@@ -316,7 +305,7 @@ $js_certs_json = json_encode($js_certs, JSON_HEX_TAG | JSON_HEX_AMP);
         .modal-close-btn:hover { background: rgba(255,255,255,.35); transform: rotate(90deg); }
         .modal-scroll { overflow-y: auto; flex: 1; padding: 28px; background: var(--bg); }
 
-        /* ── Certificate document (shared by preview & PDF) ── */
+        /* ── Certificate document ── */
         .cert-document {
             background: white; border-radius: 8px; padding: 32px 40px;
             font-family: 'Times New Roman', serif;
@@ -325,11 +314,6 @@ $js_certs_json = json_encode($js_certs, JSON_HEX_TAG | JSON_HEX_AMP);
         .cert-doc-header {
             display: flex; align-items: center; gap: 14px;
             margin-bottom: 12px; padding-bottom: 12px; border-bottom: 2.5px solid var(--primary);
-        }
-        .cert-doc-logo {
-            width: 58px; height: 58px; background: var(--primary); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 18px; font-weight: 700; flex-shrink: 0; font-family: 'Poppins', sans-serif;
         }
         .cert-doc-header-text { flex: 1; text-align: center; }
         .cert-doc-header-text .rep  { font-size: 10px; color: #555; font-style: italic; }
@@ -349,18 +333,37 @@ $js_certs_json = json_encode($js_certs, JSON_HEX_TAG | JSON_HEX_AMP);
         .cert-doc-sig-detail { font-size: 11px; color: #555; margin-top: 3px; }
         .cert-doc-ref { font-size: 10px; color: #aaa; margin-top: 18px; text-align: right; border-top: 1px solid var(--border); padding-top: 6px; }
 
-        /* Modal footer */
+        /* ── Modal footer — Close (white) + Download PDF (red) ── */
         .modal-footer-bar {
             padding: 16px 28px; background: #f9fafb; border-top: 1px solid var(--border);
             display: flex; justify-content: flex-end; gap: 10px; flex-shrink: 0;
         }
-        .btn-mclose {
-            padding: 10px 22px; border-radius: 8px; border: none;
+        .btn-modal-close {
+            padding: 10px 24px; border-radius: 8px;
+            border: 2px solid var(--border);
+            background: white; color: var(--text-dark);
+            font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 600;
+            cursor: pointer; transition: all .2s;
+            display: inline-flex; align-items: center; gap: 7px;
+        }
+        .btn-modal-close:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-soft); }
+        .btn-modal-download {
+            padding: 10px 24px; border-radius: 8px; border: none;
             background: var(--primary); color: white;
             font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 600;
             cursor: pointer; transition: background .2s;
+            display: inline-flex; align-items: center; gap: 7px;
         }
-        .btn-mclose:hover { background: var(--primary-light); }
+        .btn-modal-download:hover    { background: var(--primary-light); }
+        .btn-modal-download:disabled { background: #9ca3af; cursor: not-allowed; }
+
+        .dl-spin {
+            display: none; width: 16px; height: 16px;
+            border: 2px solid rgba(255,255,255,.4);
+            border-top-color: white; border-radius: 50%;
+            animation: spin .7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         /* ── Responsive ── */
         @media (max-width: 768px) {
@@ -385,8 +388,8 @@ $js_certs_json = json_encode($js_certs, JSON_HEX_TAG | JSON_HEX_AMP);
         <a href="medical_history.php" class="nav-item">
             <i class="bi bi-clock-history"></i><span>Medical History</span>
         </a>
-        <a href="certificates.php" class="nav-item active">
-            <i class="bi bi-file-earmark-medical"></i><span>Certificates</span>
+        <a href="medical_certificates.php" class="nav-item active">
+            <i class="bi bi-file-earmark-medical"></i><span>Medical Certificates</span>
         </a>
         <a href="profile.php" class="nav-item">
             <i class="bi bi-person"></i><span>Profile</span>
@@ -404,9 +407,9 @@ $js_certs_json = json_encode($js_certs, JSON_HEX_TAG | JSON_HEX_AMP);
         <button class="chatbot-close" id="chatbotClose">&times;</button>
     </div>
     <div class="quick-actions">
-        <button class="quick-action-btn" data-message="Available certificates">📄 My Certificates</button>
-        <button class="quick-action-btn" data-message="How to download">💾 Download Help</button>
-        <button class="quick-action-btn" data-message="Request new certificate">✨ Request New</button>
+        <button class="quick-action-btn" data-message="Available certificates">My Certificates</button>
+        <button class="quick-action-btn" data-message="How to download">Download Help</button>
+        <button class="quick-action-btn" data-message="Request new certificate">Request New</button>
     </div>
     <div class="chatbot-messages" id="chatbotMessages">
         <div class="message bot">
@@ -425,14 +428,13 @@ $js_certs_json = json_encode($js_certs, JSON_HEX_TAG | JSON_HEX_AMP);
 <!-- ── Main ── -->
 <main class="main-content">
     <div class="page-header">
-        <h2><i class="bi bi-file-earmark-medical me-2" style="font-size:30px;vertical-align:middle;"></i>Medical Certificates</h2>
+        <h2>Medical Certificates</h2>
         <p>Download and view your official certificates for <strong><?= esc($display_name) ?></strong> &nbsp;·&nbsp; <?= esc($student_number) ?></p>
     </div>
 
-    <!-- ── Table ── -->
     <div class="certificates-section">
         <div class="section-header">
-            <span><i class="bi bi-collection me-2"></i>Available Certificates</span>
+            <span>Available Certificates</span>
             <span class="cert-count"><?= $total ?> document<?= $total !== 1 ? 's' : '' ?></span>
         </div>
 
@@ -453,14 +455,13 @@ $js_certs_json = json_encode($js_certs, JSON_HEX_TAG | JSON_HEX_AMP);
                     <th>Issue Date</th>
                     <th>Valid Until</th>
                     <th>Status</th>
-                    <th>Actions</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
             <?php foreach ($certs as $idx => $cert):
                 [$statusLabel, $statusClass] = cert_status($cert['source_table'], $cert['status_detail'] ?? '');
-                $isShield = ($cert['source_table'] === 'medical_clearances');
-                $typeIcon  = $isShield ? 'bi-shield-check' : 'bi-file-earmark-medical';
+                $isShield  = ($cert['source_table'] === 'medical_clearances');
                 $typeColor = $isShield ? '#4c1d95' : '#9d174d';
             ?>
             <tr>
@@ -480,12 +481,8 @@ $js_certs_json = json_encode($js_certs, JSON_HEX_TAG | JSON_HEX_AMP);
                 </td>
                 <td><span class="status-badge <?= $statusClass ?>"><?= esc($statusLabel) ?></span></td>
                 <td>
-                    <button class="btn-action btn-view" onclick="viewCert(<?= $idx ?>)">
-                        <i class="bi bi-eye"></i> View
-                    </button>
-                    <button class="btn-action btn-download" onclick="downloadCert(<?= $idx ?>, this)">
-                        <div class="dl-spin"></div>
-                        <i class="bi bi-download"></i> Download PDF
+                    <button class="btn-view-details" onclick="viewCert(<?= $idx ?>)">
+                        View Details
                     </button>
                 </td>
             </tr>
@@ -509,8 +506,15 @@ $js_certs_json = json_encode($js_certs, JSON_HEX_TAG | JSON_HEX_AMP);
         <div class="modal-scroll">
             <div class="cert-document" id="cert-modal-preview"></div>
         </div>
+        <!-- Footer: Close (white) + Download PDF (red) -->
         <div class="modal-footer-bar">
-            <button class="btn-mclose" onclick="closeCertModal()"><i class="bi bi-x-circle me-1"></i> Close</button>
+            <button class="btn-modal-close" onclick="closeCertModal()">
+                <i class="bi bi-x-circle"></i> Close
+            </button>
+            <button class="btn-modal-download" id="modal-download-btn" onclick="downloadCertFromModal()">
+                <div class="dl-spin" id="modal-dl-spin"></div>
+                <i class="bi bi-download" id="modal-dl-icon"></i> Download PDF
+            </button>
         </div>
     </div>
 </div>
@@ -519,13 +523,10 @@ $js_certs_json = json_encode($js_certs, JSON_HEX_TAG | JSON_HEX_AMP);
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-
 <script>
-// ── Certificate data from PHP ──────────────────────────────
 const certData = <?= $js_certs_json ?>;
 let currentCertIdx = 0;
 
-// ── Escape helper ──────────────────────────────────────────
 function esc(s) {
     if (!s) return '';
     return String(s)
@@ -533,24 +534,20 @@ function esc(s) {
         .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ── Determine document title & sub-heading per cert type ──
 function certTitles(c) {
     if (c.source === 'medical_clearances') {
         return { main: 'MEDICAL CLEARANCE', sub: esc(c.fitStatus).toUpperCase() || 'PHYSICALLY FIT' };
     }
-    // Medical certificates — vary sub-heading by certificate_type
     const subMap = {
-        'Sick Leave':         'SICK LEAVE CERTIFICATE',
-        'Fitness to Study':   'FITNESS TO STUDY',
-        'Fitness to Work':    'FITNESS TO WORK',
-        'Medical Clearance':  'PHYSICALLY FIT',
-        'General Purpose':    'MEDICAL CERTIFICATE',
+        'Sick Leave':        'SICK LEAVE CERTIFICATE',
+        'Fitness to Study':  'FITNESS TO STUDY',
+        'Fitness to Work':   'FITNESS TO WORK',
+        'Medical Clearance': 'PHYSICALLY FIT',
+        'General Purpose':   'MEDICAL CERTIFICATE',
     };
     return { main: esc(c.type).toUpperCase(), sub: subMap[c.type] || 'MEDICAL CERTIFICATE' };
 }
 
-// ── Single shared template for both preview & PDF ─────────
-//    `forPdf` switches between CSS-class-based and inline styles.
 function buildCertHTML(c, forPdf = false) {
     const { main, sub } = certTitles(c);
     const physician = c.physician || 'CLINIC PHYSICIAN';
@@ -564,10 +561,9 @@ function buildCertHTML(c, forPdf = false) {
         : `has been examined and issued this <strong>${esc(c.type)}</strong> upon request.`;
 
     if (!forPdf) {
-        // Preview — uses CSS classes defined in <style>
         return `
         <div class="cert-doc-header">
-            <div class="cert-doc-logo">PUP</div>
+            <img src="../assets/img/pup_logo.png" alt="PUP Logo" style="width:58px;height:58px;object-fit:contain;flex-shrink:0;">
             <div class="cert-doc-header-text">
                 <div class="rep">Republic of the Philippines</div>
                 <div class="univ">POLYTECHNIC UNIVERSITY OF THE PHILIPPINES</div>
@@ -596,12 +592,11 @@ function buildCertHTML(c, forPdf = false) {
         <div class="cert-doc-ref">Medical 03 · Rev 1 · PUP-LAFO-6-MEDS · Medical Services Department</div>`;
     }
 
-    // PDF — fully inline styles (html2canvas ignores external CSS)
     const pRed = '#7f1d1d', pDark = '#1f2937';
     return `
     <div style="font-family:'Times New Roman',serif;background:white;color:${pDark};">
         <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px;padding-bottom:12px;border-bottom:2.5px solid ${pRed};">
-            <div style="width:60px;height:60px;background:${pRed};border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:18px;font-weight:700;flex-shrink:0;font-family:Arial,sans-serif;">PUP</div>
+            <img src="../assets/pup_logo.png" alt="PUP Logo" style="width:60px;height:60px;object-fit:contain;flex-shrink:0;">
             <div style="flex:1;text-align:center;">
                 <div style="font-size:10px;color:#555;font-style:italic;">Republic of the Philippines</div>
                 <div style="font-size:13px;font-weight:bold;color:${pDark};">POLYTECHNIC UNIVERSITY OF THE PHILIPPINES</div>
@@ -631,12 +626,12 @@ function buildCertHTML(c, forPdf = false) {
     </div>`;
 }
 
-// ── View modal ─────────────────────────────────────────────
+// ── Open modal ─────────────────────────────────────────────
 function viewCert(idx) {
     currentCertIdx = idx;
     const c = certData[idx];
-    document.getElementById('modal-cert-type').textContent    = c.type;
-    document.getElementById('cert-modal-preview').innerHTML   = buildCertHTML(c, false);
+    document.getElementById('modal-cert-type').textContent  = c.type;
+    document.getElementById('cert-modal-preview').innerHTML = buildCertHTML(c, false);
     document.getElementById('certModal').classList.add('show');
     document.body.style.overflow = 'hidden';
 }
@@ -647,16 +642,18 @@ function closeCertModal() {
 document.getElementById('certModal').addEventListener('click', function (e) {
     if (e.target === this) closeCertModal();
 });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCertModal(); });
 
-// ── PDF download — table row ───────────────────────────────
-async function downloadCert(idx, btn) {
-    const spin = btn.querySelector('.dl-spin');
-    const icon = btn.querySelector('i');
+// ── Download PDF from inside modal ────────────────────────
+async function downloadCertFromModal() {
+    const btn  = document.getElementById('modal-download-btn');
+    const spin = document.getElementById('modal-dl-spin');
+    const icon = document.getElementById('modal-dl-icon');
     btn.disabled = true;
     spin.style.display = 'block';
     icon.style.display = 'none';
     try {
-        const c      = certData[idx];
+        const c      = certData[currentCertIdx];
         const target = document.createElement('div');
         target.style.cssText = 'position:fixed;left:-9999px;top:0;width:680px;background:white;padding:44px 52px;font-family:Times New Roman,serif;';
         target.innerHTML = buildCertHTML(c, true);
@@ -731,15 +728,15 @@ function getBotResponse(message) {
         return `You have <strong>${totalCerts}</strong> certificate${totalCerts !== 1 ? 's' : ''} on file:\n${list}`;
     }
     if (m.includes('download') || m.includes('pdf'))
-        return "Click <strong>Download PDF</strong> next to any certificate in the table, or open it with <strong>View</strong> first and then download from inside the preview.";
+        return "Click <strong>View Details</strong> next to any certificate, then use the <strong>Download PDF</strong> button inside the preview.";
     if (m.includes('request') || m.includes('new') || m.includes('apply'))
         return "To get a new certificate: <a href='book_appointment.php' style='color:var(--primary);font-weight:600;'>book a Medical Clearance appointment</a>. After your clinic visit, the document will appear here automatically.";
     if (m.includes('valid') || m.includes('expire'))
         return totalCerts > 0
-            ? `Your validity dates are shown in the <strong>Valid Until</strong> column of the table. Check there for up-to-date info.`
+            ? `Your validity dates are shown in the <strong>Valid Until</strong> column of the table.`
             : "No certificates yet — validity dates will show here once you have documents on file.";
     if (m.includes('print'))
-        return "Download the PDF first, then print it from your PDF viewer. Print in colour for the best official appearance.";
+        return "Download the PDF first using <strong>View Details</strong>, then print it from your PDF viewer.";
     if (m.includes('hello') || m.includes('hi'))
         return "Hello! I can help you view, download, and understand your medical certificates. What do you need?";
     return `I can help you with viewing, downloading, and requesting certificates. You currently have <strong>${totalCerts}</strong> document${totalCerts !== 1 ? 's' : ''} on file.`;

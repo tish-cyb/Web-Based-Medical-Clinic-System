@@ -41,9 +41,6 @@ while ($row = mysqli_fetch_assoc($history_result)) {
 }
 
 // ── 3. DETAIL RECORDS — fetch full rows per source table ─────
-//    We load ALL detail records upfront and index them so the
-//    JS modal can look them up by (source_table + source_id).
-
 $details = [];   // keyed as "table:id"
 
 // ── 3a. consultation_records ─────────────────────────────────
@@ -155,21 +152,19 @@ function esc(?string $s): string {
     return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8');
 }
 
-// Badge style per record_type
+// Badge style per record_type — no icons
 function type_badge(string $type): string {
     $map = [
-        'Consultation'        => ['icon' => 'bi-chat-square-text',     'bg' => '#dbeafe', 'color' => '#1e40af'],
-        'Health Exam'         => ['icon' => 'bi-clipboard2-pulse',      'bg' => '#d1fae5', 'color' => '#065f46'],
-        'Laboratory Request'  => ['icon' => 'bi-eyedropper',            'bg' => '#fef3c7', 'color' => '#92400e'],
-        'Medical Clearance'   => ['icon' => 'bi-shield-check',          'bg' => '#ede9fe', 'color' => '#4c1d95'],
-        'Medical Certificate' => ['icon' => 'bi-file-earmark-medical',  'bg' => '#fce7f3', 'color' => '#9d174d'],
+        'Consultation'        => ['bg' => '#dbeafe', 'color' => '#1e40af'],
+        'Health Exam'         => ['bg' => '#d1fae5', 'color' => '#065f46'],
+        'Laboratory Request'  => ['bg' => '#fef3c7', 'color' => '#92400e'],
+        'Medical Clearance'   => ['bg' => '#ede9fe', 'color' => '#4c1d95'],
+        'Medical Certificate' => ['bg' => '#fce7f3', 'color' => '#9d174d'],
     ];
-    $m = $map[$type] ?? ['icon' => 'bi-file-text', 'bg' => '#f3f4f6', 'color' => '#374151'];
+    $m = $map[$type] ?? ['bg' => '#f3f4f6', 'color' => '#374151'];
     return sprintf(
-        '<span style="display:inline-flex;align-items:center;gap:6px;background:%s;color:%s;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;">
-            <i class="bi %s"></i>%s
-         </span>',
-        $m['bg'], $m['color'], $m['icon'], esc($type)
+        '<span style="display:inline-flex;align-items:center;background:%s;color:%s;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;">%s</span>',
+        $m['bg'], $m['color'], esc($type)
     );
 }
 
@@ -368,7 +363,6 @@ $college         = $profile['college']            ?? '—';
             display:flex; align-items:center; gap:12px;
             color:rgba(255,255,255,.9); text-decoration:none;
         }
-        .nav-item i { font-size:18px; }
         .nav-item:hover  { background:rgba(255,255,255,.1); color:white; }
         .nav-item.active { background:rgba(0,0,0,.2); border-left-color:white; color:white; }
         .sidebar-footer { padding:20px; display:flex; justify-content:center; }
@@ -408,7 +402,7 @@ $college         = $profile['college']            ?? '—';
         .chatbot-input-wrapper { display:flex; gap:10px; }
         .chatbot-input { flex:1; padding:12px 16px; border:2px solid var(--border); border-radius:24px; font-size:14px; font-family:'Poppins',sans-serif; outline:none; transition:border-color .3s; }
         .chatbot-input:focus { border-color:var(--primary); }
-        .chatbot-send { width:44px; height:44px; background:var(--primary); color:white; border:none; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; transition:background .3s; }
+        .chatbot-send { width:44px; height:44px; background:var(--primary); color:white; border:none; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; transition:background .3s; font-weight:700; }
         .chatbot-send:hover { background:var(--primary-light); }
         .typing-indicator { display:flex; gap:4px; padding:12px 16px; }
         .typing-indicator span { width:8px; height:8px; background:var(--text-gray); border-radius:50%; animation:typing 1.4s infinite; }
@@ -422,20 +416,34 @@ $college         = $profile['college']            ?? '—';
         .page-header h2 { color:var(--primary); font-size:34px; font-weight:700; margin-bottom:6px; }
         .page-header p  { color:var(--text-gray); font-size:15px; }
 
-        /* ── Summary Cards ── */
-        .summary-row { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px; }
+        /* ── Summary Cards — Dashboard Style ── */
+        .summary-row {
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:16px;
+            margin-bottom:28px;
+        }
         .sum-card {
-            background:white; border-radius:12px; padding:20px 22px;
+            background:white;
+            border-radius:10px;
+            padding:24px 26px;
             box-shadow:0 2px 8px rgba(0,0,0,.06);
-            display:flex; align-items:center; gap:16px;
+            border-left:5px solid var(--primary);
+            display:flex;
+            flex-direction:column;
+            gap:6px;
         }
-        .sum-icon {
-            width:48px; height:48px; border-radius:12px;
-            display:flex; align-items:center; justify-content:center;
-            font-size:22px; flex-shrink:0;
+        .sum-card .sum-num {
+            font-size:36px;
+            font-weight:700;
+            color:var(--primary);
+            line-height:1;
         }
-        .sum-card .sum-num   { font-size:24px; font-weight:700; color:var(--text-dark); line-height:1; }
-        .sum-card .sum-label { font-size:12px; color:var(--text-gray); margin-top:3px; }
+        .sum-card .sum-label {
+            font-size:13px;
+            color:var(--text-gray);
+            font-weight:500;
+        }
 
         /* ── History Table Card ── */
         .history-section { background:white; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,.06); overflow:hidden; }
@@ -469,7 +477,6 @@ $college         = $profile['college']            ?? '—';
 
         /* Empty state */
         .empty-state { padding:60px 30px; text-align:center; color:var(--text-gray); }
-        .empty-state i { font-size:56px; opacity:.3; margin-bottom:16px; display:block; }
         .empty-state p { font-size:15px; }
 
         .table { margin-bottom:0; }
@@ -518,7 +525,7 @@ $college         = $profile['college']            ?? '—';
             display:flex; justify-content:space-between; align-items:flex-start;
             flex-shrink:0;
         }
-        .modal-head-title { font-size:19px; font-weight:700; margin-bottom:3px; display:flex; align-items:center; gap:8px; }
+        .modal-head-title { font-size:19px; font-weight:700; margin-bottom:3px; }
         .modal-head-sub   { font-size:12px; opacity:.85; }
         .modal-close-btn {
             background:rgba(255,255,255,.2); border:none; color:white;
@@ -548,7 +555,7 @@ $college         = $profile['college']            ?? '—';
             font-size:12px; font-weight:700; text-transform:uppercase;
             letter-spacing:.6px; color:var(--primary);
             padding-bottom:8px; border-bottom:2px solid var(--primary-soft);
-            margin:22px 0 14px; display:flex; align-items:center; gap:8px;
+            margin:22px 0 14px;
         }
         .d-section-title:first-child { margin-top:0; }
 
@@ -593,7 +600,6 @@ $college         = $profile['college']            ?? '—';
             border-radius:10px; padding:14px 18px;
             display:flex; align-items:center; gap:12px; margin-top:4px;
         }
-        .followup-alert i    { color:#c2410c; font-size:20px; flex-shrink:0; }
         .followup-alert .fa-text { font-size:13px; color:#92400e; font-weight:500; }
         .followup-alert .fa-date { font-weight:700; }
 
@@ -639,7 +645,7 @@ $college         = $profile['college']            ?? '—';
             <i class="bi bi-clock-history"></i><span>Medical History</span>
         </a>
         <a href="certificates.php" class="nav-item">
-            <i class="bi bi-file-earmark-medical"></i><span>Certificates</span>
+            <i class="bi bi-file-earmark-medical"></i><span>Medical Certificates</span>
         </a>
         <a href="profile.php" class="nav-item">
             <i class="bi bi-person"></i><span>Profile</span>
@@ -653,13 +659,13 @@ $college         = $profile['college']            ?? '—';
 <!-- ── Chatbot ── -->
 <div class="chatbot-container" id="chatbotContainer">
     <div class="chatbot-header">
-        <h3><i class="bi bi-robot"></i> Medical Assistant</h3>
+        <h3>Medical Assistant</h3>
         <button class="chatbot-close" id="chatbotClose">&times;</button>
     </div>
     <div class="quick-actions">
-        <button class="quick-action-btn" data-message="Show my records">📋 My Records</button>
-        <button class="quick-action-btn" data-message="Latest consultation">🩺 Latest Visit</button>
-        <button class="quick-action-btn" data-message="Download records">💾 Download</button>
+        <button class="quick-action-btn" data-message="Show my records">My Records</button>
+        <button class="quick-action-btn" data-message="Latest consultation">Latest Visit</button>
+        <button class="quick-action-btn" data-message="Download records">Download</button>
     </div>
     <div class="chatbot-messages" id="chatbotMessages">
         <div class="message bot">
@@ -670,7 +676,7 @@ $college         = $profile['college']            ?? '—';
     <div class="chatbot-input-area">
         <div class="chatbot-input-wrapper">
             <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Type your message..." autocomplete="off">
-            <button class="chatbot-send" id="chatbotSend"><i class="bi bi-send-fill"></i></button>
+            <button class="chatbot-send" id="chatbotSend">&#9658;</button>
         </div>
     </div>
 </div>
@@ -678,33 +684,30 @@ $college         = $profile['college']            ?? '—';
 <!-- ── Main ── -->
 <main class="main-content">
     <div class="page-header">
-        <h2><i class="bi bi-clock-history me-2" style="font-size:30px;vertical-align:middle;"></i>Medical History</h2>
-        <p>All medical records for <strong><?= esc($full_name) ?></strong> &nbsp;·&nbsp; <?= esc($student_number) ?> &nbsp;·&nbsp; <?= esc($college) ?></p>
+        <h2>Medical History</h2>
+        <p>All medical records for <strong><?= esc($full_name) ?></strong> &nbsp;&middot;&nbsp; <?= esc($student_number) ?> &nbsp;&middot;&nbsp; <?= esc($college) ?></p>
     </div>
 
-    <!-- ── Summary Cards ── -->
+    <!-- ── Summary Cards — Dashboard Style ── -->
     <?php
     $counts = ['Consultation' => 0, 'Health Exam' => 0, 'Laboratory Request' => 0, 'Medical Clearance' => 0, 'Medical Certificate' => 0];
     foreach ($history_rows as $r) {
         if (isset($counts[$r['record_type']])) $counts[$r['record_type']]++;
     }
     $card_cfg = [
-        ['label' => 'Consultations',    'key' => 'Consultation',        'icon' => 'bi-chat-square-text',    'bg' => '#dbeafe', 'color' => '#1e40af'],
-        ['label' => 'Health Exams',     'key' => 'Health Exam',         'icon' => 'bi-clipboard2-pulse',    'bg' => '#d1fae5', 'color' => '#065f46'],
-        ['label' => 'Lab Requests',     'key' => 'Laboratory Request',  'icon' => 'bi-eyedropper',          'bg' => '#fef3c7', 'color' => '#92400e'],
-        ['label' => 'Certificates',     'key' => 'Medical Certificate', 'icon' => 'bi-file-earmark-medical','bg' => '#fce7f3', 'color' => '#9d174d'],
+        ['label' => 'Consultations', 'key' => 'Consultation'],
+        ['label' => 'Health Exams',  'key' => 'Health Exam'],
+        ['label' => 'Lab Requests',  'key' => 'Laboratory Request'],
+        ['label' => 'Certificates',  'key' => 'Medical Certificate'],
     ];
     ?>
     <div class="summary-row">
         <?php foreach ($card_cfg as $cfg): ?>
         <div class="sum-card">
-            <div class="sum-icon" style="background:<?= $cfg['bg'] ?>;color:<?= $cfg['color'] ?>;">
-                <i class="bi <?= $cfg['icon'] ?>"></i>
+            <div class="sum-num">
+                <?= $counts[$cfg['key']] + ($cfg['key'] === 'Medical Certificate' ? ($counts['Medical Clearance'] ?? 0) : 0) ?>
             </div>
-            <div>
-                <div class="sum-num"><?= $counts[$cfg['key']] + ($cfg['key'] === 'Medical Certificate' ? ($counts['Medical Clearance'] ?? 0) : 0) ?></div>
-                <div class="sum-label"><?= $cfg['label'] ?></div>
-            </div>
+            <div class="sum-label"><?= $cfg['label'] ?></div>
         </div>
         <?php endforeach; ?>
     </div>
@@ -712,7 +715,7 @@ $college         = $profile['college']            ?? '—';
     <!-- ── History Table ── -->
     <div class="history-section">
         <div class="section-header">
-            <span><i class="bi bi-journal-medical me-2"></i>All Medical Records</span>
+            <span>All Medical Records</span>
             <span class="rec-count"><?= $total_records ?> record<?= $total_records !== 1 ? 's' : '' ?></span>
         </div>
 
@@ -729,7 +732,6 @@ $college         = $profile['college']            ?? '—';
 
         <?php if (empty($history_rows)): ?>
         <div class="empty-state">
-            <i class="bi bi-journal-x"></i>
             <p>No medical records found for your account.</p>
             <p style="font-size:13px;margin-top:8px;">Records will appear here after your first clinic visit.</p>
         </div>
@@ -757,7 +759,6 @@ $college         = $profile['college']            ?? '—';
                     <td class="date-cell">
                         <?php if ($row['follow_up_date']): ?>
                             <span style="color:#c2410c;font-weight:600;">
-                                <i class="bi bi-bell-fill" style="font-size:11px;"></i>
                                 <?= fmt_date($row['follow_up_date']) ?>
                             </span>
                         <?php else: ?>
@@ -765,9 +766,7 @@ $college         = $profile['college']            ?? '—';
                         <?php endif; ?>
                     </td>
                     <td>
-                        <button class="btn-details" onclick="viewDetails(<?= $idx ?>)">
-                            <i class="bi bi-eye me-1"></i>View
-                        </button>
+                        <button class="btn-details" onclick="viewDetails(<?= $idx ?>)">View Details</button>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -795,19 +794,19 @@ $college         = $profile['college']            ?? '—';
         <!-- Meta strip -->
         <div class="record-meta">
             <div class="meta-item">
-                <span class="meta-label"><i class="bi bi-calendar3"></i> Date</span>
+                <span class="meta-label">Date</span>
                 <span class="meta-value" id="d-meta-date">—</span>
             </div>
             <div class="meta-item">
-                <span class="meta-label"><i class="bi bi-clock"></i> Time</span>
+                <span class="meta-label">Time</span>
                 <span class="meta-value" id="d-meta-time">—</span>
             </div>
             <div class="meta-item">
-                <span class="meta-label"><i class="bi bi-person-badge"></i> Healthcare Provider</span>
+                <span class="meta-label">Healthcare Provider</span>
                 <span class="meta-value highlight" id="d-meta-provider">—</span>
             </div>
             <div class="meta-item">
-                <span class="meta-label"><i class="bi bi-tag"></i> Sub-type</span>
+                <span class="meta-label">Sub-type</span>
                 <span class="meta-value" id="d-meta-subtype">—</span>
             </div>
         </div>
@@ -819,9 +818,7 @@ $college         = $profile['college']            ?? '—';
 
         <!-- Footer -->
         <div class="modal-footer-bar">
-            <button class="btn-close-modal" onclick="closeDetails()">
-                <i class="bi bi-x-circle me-1"></i> Close
-            </button>
+            <button class="btn-close-modal" onclick="closeDetails()">Close</button>
         </div>
     </div>
 </div>
@@ -858,7 +855,7 @@ function field(label, value, cls = '') {
 function statusPill(s) {
     const map = { 'Completed':'pill-completed', 'Active':'pill-active', 'Requested':'pill-follow-up', 'Released':'pill-active' };
     const cls = map[s] || 'pill-completed';
-    return `<span class="status-pill ${cls}"><i class="bi bi-check-circle-fill"></i>${escHtml(s)}</span>`;
+    return `<span class="status-pill ${cls}">${escHtml(s)}</span>`;
 }
 function vitalCard(id, label, val, unit) {
     const has = val && val !== '—';
@@ -869,7 +866,7 @@ function vitalCard(id, label, val, unit) {
     </div>`;
 }
 function vitalsBlock(r) {
-    return `<div class="d-section-title"><i class="bi bi-thermometer-half"></i> Vital Signs</div>
+    return `<div class="d-section-title">Vital Signs</div>
     <div class="vitals-grid">
         ${vitalCard('bp',  'Blood Pressure', r.bp,   'mmHg')}
         ${vitalCard('temp','Temperature',    r.temp, '°C')}
@@ -881,9 +878,8 @@ function vitalsBlock(r) {
 }
 function followUpBlock(dateStr) {
     if (!dateStr || dateStr === '—') return '';
-    return `<div class="d-section-title"><i class="bi bi-calendar-check"></i> Follow-up</div>
+    return `<div class="d-section-title">Follow-up</div>
     <div class="followup-alert">
-        <i class="bi bi-bell-fill"></i>
         <div class="fa-text">Your follow-up appointment is scheduled on
             <span class="fa-date">${escHtml(dateStr)}</span>.
             Please visit the clinic or book an appointment on or before this date.
@@ -897,14 +893,14 @@ function buildBody(r) {
 
         case 'Consultation':
             return `
-            <div class="d-section-title"><i class="bi bi-person"></i> Patient Information</div>
+            <div class="d-section-title">Patient Information</div>
             <div class="d-grid-2">
                 ${field('Consultation Type', r.consultType)}
                 ${field('College / Department', r.department)}
                 ${r.daysOfRest ? field('Days of Rest', r.daysOfRest + ' day(s)') : ''}
             </div>
             ${vitalsBlock(r)}
-            <div class="d-section-title"><i class="bi bi-journal-medical"></i> Clinical Information</div>
+            <div class="d-section-title">Clinical Information</div>
             <div class="d-grid-1">${field('Chief Complaint / Symptoms', r.complaint, 'multiline')}</div>
             <div class="d-grid-2">
                 ${field('Physical Examination Findings', r.findings, 'multiline')}
@@ -919,14 +915,14 @@ function buildBody(r) {
 
         case 'Health Exam':
             return `
-            <div class="d-section-title"><i class="bi bi-person"></i> Exam Information</div>
+            <div class="d-section-title">Exam Information</div>
             <div class="d-grid-2">
                 ${field('School Year / Semester', r.schoolYear)}
                 ${field('Fit Status', r.fitStatus)}
                 ${field('General Condition', r.generalCond)}
             </div>
             ${vitalsBlock(r)}
-            <div class="d-section-title"><i class="bi bi-journal-medical"></i> Medical History</div>
+            <div class="d-section-title">Medical History</div>
             <div class="d-grid-2">
                 ${field('Known Allergies', r.allergies)}
                 ${field('Current Medications', r.medications)}
@@ -934,7 +930,7 @@ function buildBody(r) {
                 ${field('Surgeries / Operations', r.surgeries, 'multiline')}
                 ${field('Previous Hospitalizations', r.hospitalizations, 'multiline')}
             </div>
-            <div class="d-section-title"><i class="bi bi-clipboard2-pulse"></i> Clinical Findings</div>
+            <div class="d-section-title">Clinical Findings</div>
             <div class="d-grid-2">
                 ${field('Physical Findings', r.findings, 'multiline')}
                 ${field('Working Impression', r.diagnosis, 'multiline')}
@@ -950,9 +946,9 @@ function buildBody(r) {
                 ? r.tests.split(', ').map(t => `<span class="lab-tag">${escHtml(t)}</span>`).join('')
                 : '<span style="color:#9ca3af;font-style:italic;">No tests recorded</span>';
             return `
-            <div class="d-section-title"><i class="bi bi-eyedropper"></i> Requested Tests</div>
+            <div class="d-section-title">Requested Tests</div>
             <div class="lab-tags">${tags}</div>
-            <div class="d-section-title"><i class="bi bi-info-circle"></i> Details</div>
+            <div class="d-section-title">Details</div>
             <div class="d-grid-2">
                 ${field('Request Status', r.status)}
             </div>
@@ -960,7 +956,7 @@ function buildBody(r) {
 
         case 'Medical Clearance':
             return `
-            <div class="d-section-title"><i class="bi bi-shield-check"></i> Clearance Details</div>
+            <div class="d-section-title">Clearance Details</div>
             <div class="d-grid-2">
                 ${field('Purpose', r.purpose)}
                 ${field('Fit Status', r.fitStatus)}
@@ -976,7 +972,7 @@ function buildBody(r) {
 
         case 'Medical Certificate':
             return `
-            <div class="d-section-title"><i class="bi bi-file-earmark-medical"></i> Certificate Details</div>
+            <div class="d-section-title">Certificate Details</div>
             <div class="d-grid-2">
                 ${field('Certificate Type', r.consultType)}
                 ${field('Status', r.certStatus)}
@@ -1000,18 +996,7 @@ function buildBody(r) {
 function viewDetails(index) {
     const r = records[index];
 
-    // Icon map
-    const iconMap = {
-        'Consultation':        'bi-chat-square-text',
-        'Health Exam':         'bi-clipboard2-pulse',
-        'Laboratory Request':  'bi-eyedropper',
-        'Medical Clearance':   'bi-shield-check',
-        'Medical Certificate': 'bi-file-earmark-medical',
-    };
-    const icon = iconMap[r.type] || 'bi-file-text';
-
-    document.getElementById('modal-type-title').innerHTML =
-        `<i class="bi ${icon}"></i>${escHtml(r.type)}`;
+    document.getElementById('modal-type-title').textContent = r.type;
 
     document.getElementById('d-meta-date').textContent    = r.date     || '—';
     document.getElementById('d-meta-time').textContent    = r.time     || '—';
@@ -1099,6 +1084,11 @@ function getBotResponse(message) {
 
 chatbotSend.addEventListener('click', () => sendMessage());
 chatbotInput.addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
+
+function escHtml(s) {
+    if (!s) return '';
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 </script>
 </body>
 </html>

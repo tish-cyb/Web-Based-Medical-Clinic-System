@@ -656,7 +656,7 @@ $level_label    = $role === 'student' ? 'Year Level'       : 'Department';
             <i class="bi bi-clock-history"></i><span>Medical History</span>
         </a>
         <a href="certificates.php" class="nav-item">
-            <i class="bi bi-file-earmark-medical"></i><span>Certificates</span>
+            <i class="bi bi-file-earmark-medical"></i><span>Medical Certificates</span>
         </a>
         <a href="profile.php" class="nav-item">
             <i class="bi bi-person"></i><span>Profile</span>
@@ -695,7 +695,7 @@ $level_label    = $role === 'student' ? 'Year Level'       : 'Department';
 <!-- ── Main ── -->
 <main class="main-content">
     <div class="page-header">
-        <h2><i class="bi bi-calendar-plus me-2" style="font-size:30px;vertical-align:middle;"></i>Book Appointment</h2>
+        <h2><i style="font-size:30px;vertical-align:middle;"></i>Book Appointment</h2>
         <p>Schedule your medical consultation or clearance at the AiCare Clinic</p>
     </div>
 
@@ -742,7 +742,6 @@ $level_label    = $role === 'student' ? 'Year Level'       : 'Department';
 
     <div class="form-card">
         <div class="form-card-header">
-            <i class="bi bi-calendar-plus"></i>
             Appointment Request Form
         </div>
         <div class="form-card-body">
@@ -902,7 +901,7 @@ $level_label    = $role === 'student' ? 'Year Level'       : 'Department';
                 <!-- ── Actions ── -->
                 <div class="form-actions">
                     <button type="button" id="reviewBtn" class="btn-submit">
-                        <i class="bi bi-eye"></i> Review & Submit
+                     Review & Submit
                     </button>
                 </div>
 

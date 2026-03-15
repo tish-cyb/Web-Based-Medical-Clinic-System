@@ -265,7 +265,7 @@ $full_name = trim(
     <nav class="sidebar-nav">
         <a href="book_appointment.php" class="nav-item"><i class="bi bi-calendar-plus"></i><span>Book Appointment</span></a>
         <a href="medical_history.php"  class="nav-item"><i class="bi bi-clock-history"></i><span>Medical History</span></a>
-        <a href="certificates.php"     class="nav-item"><i class="bi bi-file-earmark-medical"></i><span>Certificates</span></a>
+        <a href="certificates.php"     class="nav-item"><i class="bi bi-file-earmark-medical"></i><span>Medical Certificates</span></a>
         <a href="profile.php"          class="nav-item active"><i class="bi bi-person"></i><span>Profile</span></a>
     </nav>
     <div class="sidebar-footer">
@@ -310,7 +310,7 @@ $full_name = trim(
 <!-- ── Main ── -->
 <main class="main-content">
     <div class="page-header">
-        <h2><i class="bi bi-person-circle me-2" style="font-size:30px;vertical-align:middle;"></i>Student Profile</h2>
+        <h2><i style="font-size:30px;vertical-align:middle;"></i>Student Profile</h2>
         <p>Manage your personal information and emergency contact</p>
     </div>
 
@@ -319,7 +319,7 @@ $full_name = trim(
 
             <!-- Personal Information -->
             <div class="section-header">
-                <i class="bi bi-person-badge"></i> Personal Information
+                Personal Information
             </div>
             <div class="section-body">
                 <div class="form-grid">
@@ -374,7 +374,7 @@ $full_name = trim(
 
             <!-- Contact Information -->
             <div class="section-header">
-                <i class="bi bi-envelope"></i> Contact Information
+                Contact Information
                 <small>Fields marked * can be updated</small>
             </div>
             <div class="section-body">
@@ -398,7 +398,7 @@ $full_name = trim(
 
             <!-- Emergency Contact -->
             <div class="section-header">
-                <i class="bi bi-heart-pulse"></i> Emergency Contact
+                Emergency Contact
             </div>
             <div class="section-body">
                 <div class="emergency-banner">
