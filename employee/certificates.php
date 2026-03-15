@@ -491,10 +491,6 @@
         </div>
         
         <nav class="sidebar-nav">
-            <a href="employee_dashboard.php" class="nav-item" style="text-decoration: none; color: inherit;">
-                <i class="bi bi-speedometer2"></i>
-                <span>Dashboard</span>
-            </a>
             <a href="book_appointment.php" class="nav-item" style="text-decoration: none; color: inherit;">
                 <i class="bi bi-calendar-plus"></i>
                 <span>Book Appointment</span>
