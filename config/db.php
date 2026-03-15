@@ -3,7 +3,7 @@
 $host = "localhost";          // usually localhost
 $user = "root";               // your MySQL username
 $pass = "";                   // your MySQL password (empty by default in XAMPP)
-$db   = "aiCareSystem";      // your database name
+$db   = "aicaresystem";      // your database name
 
 $c = mysqli_connect($host, $user, $pass, $db);
 

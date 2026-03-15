@@ -1,45 +1,108 @@
 <?php
-require_once "config/db.php";
+session_start(); // Must be the very first line — before require_once and any output
+require_once "config/db.php"; // provides $c (mysqli connection)
 
 $login_error = '';
 
+// ── DB CONNECTION DEBUG ────────────────────────────────────────────────────
+// Uncomment the 3 lines below to confirm the DB is connected on the landing page.
+// Re-comment or remove them before going to production.
+// if (!$c) { die("<b style='color:red'>DB ERROR: " . mysqli_connect_error() . "</b>"); }
+// else      { echo "<p style='color:green;font-size:12px'>✅ Connected to aicaresystem</p>"; }
+// ──────────────────────────────────────────────────────────────────────────
+
 if (isset($_POST['signin'])) {
 
-    // Use 'identifier' instead of 'username', because that's your form field name
-    $identifier = mysqli_real_escape_string($c, $_POST['identifier']); // email or username
+    $identifier = trim($_POST['identifier']); // email / student_number / employee_number / license
     $password   = $_POST['password'];
 
-    // Check if user exists
-    $sql = "SELECT * FROM user WHERE email='$identifier' OR username='$identifier' LIMIT 1";
-    $result = mysqli_query($c, $sql);
-
-    if ($result && mysqli_num_rows($result) > 0) {
-        $user = mysqli_fetch_assoc($result);
-
-        // Directly check password (plain text)
-        if ($password === $user['password']) { // <- Use 'password' column instead of 'password_hash'
-            // Start session
-            session_start();
-            $_SESSION['user_id'] = $user['user_id'];
-            $_SESSION['username'] = $user['username'];
-            $_SESSION['role'] = $user['role'];
-
-            // Redirect based on role
-            if ($user['role'] == 'student') {
-                header("Location: student/student_dashboard.php");
-                exit();
-            } elseif ($user['role'] == 'nurse') {
-                header("Location: medical/medical_dashboard.php");                exit();
-            } elseif ($user['role'] == 'admin') {
-                header("Location: admin/admin_dashboard.php");
-                exit();
-            }
-        } else {
-            $login_error = "Incorrect password!";
-        }
-
+    if (empty($identifier) || empty($password)) {
+        $login_error = "Please fill in all fields.";
     } else {
-        $login_error = "User not found!";
+
+        // FIX 2: table is 'users' (not 'user')
+        // FIX 3: no username column — match email OR profile ID numbers via JOIN
+        // FIX 4 & 5: fetch password_hash, verify with password_verify() — NOT plain-text ===
+        $sql = "
+            SELECT
+                u.user_id,
+                u.email,
+                u.password_hash,
+                u.role,
+                u.is_active,
+                s.student_id,
+                s.student_number,
+                e.employee_id,
+                e.employee_number,
+                ms.staff_id,
+                ms.license_number
+            FROM users u
+            LEFT JOIN students      s  ON s.user_id  = u.user_id
+            LEFT JOIN employees     e  ON e.user_id  = u.user_id
+            LEFT JOIN medical_staff ms ON ms.user_id = u.user_id
+            WHERE u.email            = ?
+               OR s.student_number  = ?
+               OR e.employee_number = ?
+               OR ms.license_number = ?
+            LIMIT 1
+        ";
+
+        $stmt = mysqli_prepare($c, $sql);
+        mysqli_stmt_bind_param($stmt, "ssss", $identifier, $identifier, $identifier, $identifier);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $user   = mysqli_fetch_assoc($result);
+
+        if (!$user) {
+            $login_error = "User not found!";
+
+        } elseif (!$user['is_active']) {
+            $login_error = "Your account is inactive. Please contact the clinic.";
+
+        // FIX 5: use password_verify() — never plain-text compare
+        } elseif (!password_verify($password, $user['password_hash'])) {
+            $login_error = "Incorrect password!";
+
+        } else {
+            // ── Login success ──────────────────────────────────────────
+            session_regenerate_id(true); // prevent session fixation
+
+            $_SESSION['user_id']  = $user['user_id'];
+            $_SESSION['email']    = $user['email'];
+            $_SESSION['role']     = $user['role'];
+
+            // Store profile ID — use this in all portal WHERE clauses
+            // FIX 7 & 8: correct role values from the DB ENUM
+            switch ($user['role']) {
+                case 'student':
+                    $_SESSION['profile_id'] = $user['student_id'];
+                    $_SESSION['id_number']  = $user['student_number'];
+                    header("Location: student/book_appointment.php");
+                    break;
+
+                case 'employee':
+                    $_SESSION['profile_id'] = $user['employee_id'];
+                    $_SESSION['id_number']  = $user['employee_number'];
+                    header("Location: employee/book_appointment.php");
+                    break;
+
+                case 'medical_staff': // FIX 7: was 'nurse'
+                    $_SESSION['profile_id'] = $user['staff_id'];
+                    $_SESSION['id_number']  = $user['license_number'];
+                    header("Location: medical/medical_dashboard.php");
+                    break;
+
+                case 'admin':
+                    $_SESSION['profile_id'] = $user['staff_id'];
+                    $_SESSION['id_number']  = $user['license_number'];
+                    header("Location: medical/medical_dashboard.php");
+                    break;
+
+                default:
+                    header("Location: index.php");
+            }
+            exit();
+        }
     }
 }
 ?>
@@ -739,7 +802,7 @@ if (isset($_POST['signin'])) {
 
                             <div class="mb-3">
                                 <label class="form-label">Password</label>
-                                <input type="text" name="password" class="form-control" required>
+                                <input type="password" name="password" class="form-control" required>
                             </div>
 
                             <button type="submit" name="signin" class="btn btn-login w-100 mt-2">
